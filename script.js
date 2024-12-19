@@ -1,75 +1,103 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Vertical Navigation Setup
-    const navItems = document.querySelectorAll('.vertical-nav li');
-    const sections = document.querySelectorAll('.section');
-    const navIndicator = document.querySelector('.nav-indicator');
 
-    // Function to set active section
-    function setActiveSection(targetSectionId) {
-        // Remove active class from all sections and nav items
-        sections.forEach(section => section.classList.remove('active'));
-        navItems.forEach(item => item.classList.remove('active'));
-
-        // Find and activate target section
-        const targetSection = document.getElementById(targetSectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-
-        // Find and activate corresponding nav item
-        const targetNavItem = document.querySelector(`.vertical-nav li[data-section="${targetSectionId}"]`);
-        if (targetNavItem) {
-            targetNavItem.classList.add('active');
-            
-            // Position nav indicator
-            const itemTop = targetNavItem.offsetTop;
-            const itemHeight = targetNavItem.offsetHeight;
-            navIndicator.style.transform = `translateY(${itemTop}px)`;
-            navIndicator.style.height = `${itemHeight}px`;
-        }
+    // Scroll to the container header content on page load
+    const headerContent = document.querySelector('.container.header-content');
+    if (headerContent) {
+        headerContent.scrollIntoView({ behavior: 'smooth' });
     }
+    
+    const sections = document.querySelectorAll('.section');
+    const navItems = document.querySelectorAll('.vertical-nav ul li');
+    const navIndicator = document.querySelector('.nav-indicator');
+    const sectionsContainer = document.querySelector('.sections-container');
 
-    // Navigation click events
+    function updateNavigation() {
+        let closestSection = sections[0];
+        let minDistance = Math.abs(sections[0].getBoundingClientRect().top);
+    
+        sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            const distance = Math.abs(rect.top);
+    
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestSection = section;
+            }
+        });
+    
+        const currentSection = closestSection.id;
+    
+        // Update nav items
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.section === currentSection) {
+                item.classList.add('active');
+    
+                // Position nav indicator
+                const itemRect = item.getBoundingClientRect();
+                const navRect = navItems[0].closest('.vertical-nav').getBoundingClientRect();
+                const navOffset = navRect.top; // Top of the navigation menu
+    
+                navIndicator.style.height = `${itemRect.height}px`; // Match the height of the nav item
+                navIndicator.style.transform = `translateY(${itemRect.top - navOffset}px)`; // Adjust relative to nav menu
+            }
+        });
+    }
+    
+
+    // Add click event to nav items for smooth scrolling
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            const sectionId = item.getAttribute('data-section');
-            setActiveSection(sectionId);
+            const sectionId = item.dataset.section;
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
         });
     });
-
-    // Initial setup
-    setActiveSection('header');
 
     // Dark Mode Toggle
     const darkModeToggle = document.createElement('button');
     darkModeToggle.id = 'dark-mode-toggle';
-    darkModeToggle.innerHTML = `
-        <span>🌓</span>
-        <span>Toggle Dark Mode</span>
-    `;
     document.body.appendChild(darkModeToggle);
 
     // Check for saved dark mode preference
     const savedDarkMode = localStorage.getItem('dark-mode');
     if (savedDarkMode === 'enabled') {
         document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = `
+            <span>🌞</span>
+            <span>Toggle Light Mode</span>
+        `;
+    } else {
+        darkModeToggle.innerHTML = `
+            <span>🌙</span>
+            <span>Toggle Dark Mode</span>
+        `;
     }
 
     // Dark mode toggle functionality
     darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        
-        // Save preference
+
+        // Save preference and update button text
         if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('dark-mode', 'enabled');
+            darkModeToggle.innerHTML = `
+                <span>🌞</span>
+                <span>Toggle Light Mode</span>
+            `;
         } else {
             localStorage.setItem('dark-mode', 'disabled');
+            darkModeToggle.innerHTML = `
+                <span>🌙</span>
+                <span>Toggle Dark Mode</span>
+            `;
         }
     });
 
-    // GitHub Stats Fetching Function (from previous implementation)
+
+    // GitHub Stats Fetching Function
     async function fetchGitHubStats() {
-        const username = 'taroshima'; // Replace with actual GitHub username
+        const username = 'taroshima';
         try {
             // Fetch user profile
             const profileResponse = await fetch(`https://api.github.com/users/${username}`);
@@ -134,27 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Call GitHub stats function
-    fetchGitHubStats();
-});
-
-
-const skillsTree = {
-    "Technical Skills": {
-        "Programming Languages": ["Python", "Java", "C++", "R"],
-        "Libraries & Frameworks": ["Pandas", "Scikit-learn", "TensorFlow"],
-    },
-    "Soft Skills": ["Analytical Skills", "Problem-Solving", "Communication"],
-    "Tools": ["Microsoft Office", "Canva"],
-};
-
-
-
-
-
-
-
-const defaultMarkdown = `# Skills
+    // Markdown Editor Setup
+    const defaultMarkdown = `# Skills
 - **Technical Skills**
   - Programming Languages
     - Python
@@ -174,30 +183,45 @@ const defaultMarkdown = `# Skills
   - Canva
 `;
 
-const markdownEditor = document.getElementById('markdown-editor');
-const markdownPreview = document.getElementById('markdown-preview');
+    const markdownEditor = document.getElementById('markdown-editor');
+    const markdownPreview = document.getElementById('markdown-preview');
 
+    // Set default content in the editor
+    markdownEditor.value = defaultMarkdown;
 
+    // Function to update the preview in real-time
+    function updatePreview() {
+        const markdownText = markdownEditor.value;
+        let html = marked.parse(markdownText, { breaks: true });
+        let cleanHtml = DOMPurify.sanitize(html);
+        markdownPreview.innerHTML = cleanHtml;
+    }
 
-// Set default content in the editor
-markdownEditor.value = defaultMarkdown;
+    // Initial preview update
+    updatePreview();
 
-// Function to update the preview in real-time
-function updatePreview() {
-    const markdownText = markdownEditor.value;
+    // Listen for input events to update the preview in real-time
+    markdownEditor.addEventListener('input', updatePreview);
 
-    // Parse the markdown text using marked.js
-    let html = marked.parse(markdownText, { breaks: true });
+    // Initial navigation setup
+    updateNavigation();
 
-    // Sanitize the HTML using DOMPurify to prevent any malicious content
-    let cleanHtml = DOMPurify.sanitize(html);
+    // Update navigation on scroll
+    sectionsContainer.addEventListener('scroll', updateNavigation);
+    window.addEventListener('resize', updateNavigation);
 
-    // Set the sanitized HTML to the preview area
-    markdownPreview.innerHTML = cleanHtml;
-}
+    // Call GitHub stats function
+    fetchGitHubStats();
 
-// Initial preview update
-updatePreview();
+    // Ensure first section is active on load
+    sections[0].scrollIntoView({ behavior: 'smooth' });
+});
 
-// Listen for input events to update the preview in real-time
-markdownEditor.addEventListener('input', updatePreview);
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('.vertical-nav');
+    const toggleButton = document.getElementById('nav-toggle');
+
+    toggleButton.addEventListener('click', () => {
+        nav.classList.toggle('collapsed');
+    });
+});

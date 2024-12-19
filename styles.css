@@ -1,28 +1,28 @@
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --background-color: #f4f4f4;
-    --text-color: #333;
-    --card-background: white;
-    
-    /* Dark mode colors */
-    --dark-background: #121212;
-    --dark-text-color: #fffdfd;
+    --primary-color: #6a1b9a;
+    --secondary-color: #1e88e5;
+    --background-color: #f3f0fa;
+    --text-color: #333333;
+    --card-background: #f3f0fa;
+    --shadow: rgba(0, 0, 0, 0.1);
+
+    --dark-background: #1e1e1e;
+    --dark-text-color: #e0e0e0;
+    --dark-primary-color: #ad2ed0;
+    --dark-secondary-color: #1e88e5;
     --dark-card-background: #1e1e1e;
+    --dark-shadow: rgba(0, 0, 0, 0.6);
 
-    /* Markdown Colors */
-    --markdown-background: rgb(138, 138, 138);
-    --markdown-text: #fbf7f7;
-    --markdown-code-background: rgb(145, 143, 143); /* Light gray for code blocks */
+    --markdown-background: #e8e5f1;
+    --markdown-text: #3c3c3c;
+    --markdown-code-background: #dcd6ef;
 
-    --dark-markdown-background: #1e1e1e;
-    --dark-markdown-text: #e0e0e0;
-    --dark-markdown-code-background: #282828;
-
-    --shadow: #b5b5b5;
-    --scrollbarBG: #eee;
-    --thumbBG: #6d6d6d;
+    --dark-markdown-background: #1c1b22;
+    --dark-markdown-text: #cfcfcf;
+    --dark-markdown-code-background: #2a2835;
 }
+
+
 
 * {
     margin: 0;
@@ -44,7 +44,7 @@ body.dark-mode {
 }
 
 ::-webkit-scrollbar {
-    width: 12px; /* Standard scrollbar width */
+    width: 12px; 
 }
 *::-webkit-scrollbar,*::-webkit-scrollbar-thumb {
     border-radius: 6px;
@@ -68,24 +68,66 @@ body.dark-mode {
 
 
 
-
 .portfolio-wrapper {
     display: flex;
-    height: 100vh;
     width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .vertical-nav {
     width: 200px;
-    background-color: var(--primary-color);
-    color: white;
-    position: relative;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
     z-index: 10;
+    transition: width 0.3s ease-in-out;
+    flex-shrink: 0;
+}
+
+.dark-mode .vertical-nav {
+    background-color: var(--dark-background-color);
+    color: var(--dark-primary-color);
+    color:var(--dark-secondary-color);
+}
+
+.vertical-nav.collapsed {
+    width: 50px; 
 }
 
 .vertical-nav ul {
+    align-items: start;
     list-style-type: none;
-    padding: 20px 0;
+    padding: 0 0;
+}
+
+.vertical-nav.collapsed ul {
+    display: none; 
+}
+
+#nav-toggle {
+    background-color: var(--background-color);
+    border: none;
+    color: var(--dark-background-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+}
+
+.dark-mode #nav-toggle {
+    background-color: var(--dark-background-color);
+    color: var(--background-color);
+}
+
+
+.vertical-nav.collapsed #nav-toggle {
+    text-align: center; 
 }
 
 .vertical-nav li {
@@ -96,42 +138,57 @@ body.dark-mode {
 }
 
 .vertical-nav li:hover {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(0, 0, 0, 0.199);
+}
+
+.dark-mode .vertical-nav li:hover {
+    background-color: rgba(255, 255, 255, 0.199);
+}
+
+.dark-mode .vertical-nav li.active {
+    background-color: #1e88e521;
 }
 
 .vertical-nav li.active {
-    background-color: rgba(255,255,255,0.3);
+    background-color: #ad2ed048;
+    
 }
 
 .nav-indicator {
     position: absolute;
-    right: 0;
+    left: 0;
+    top: 0;
     width: 4px;
-    background-color: white;
-    transition: transform 0.3s;
+    background-color: var(--dark-card-background);
+    transition: transform 0.3s ease, height 0.3s ease;
+    z-index: 1;
 }
 
-.sections-container {
-    flex-grow: 1;
-    overflow-y: hidden;
-    position: relative;
+.dark-mode .nav-indicator {
+    background-color: var(--card-background);
 }
 
 .section {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(100%);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
     transition: 
         opacity 0.5s ease, 
         transform 0.5s ease, 
         visibility 0.5s;
     overflow-y: auto;
     background: var(--card-background);
+
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    margin: 4rem;
 }
 
 .section.active {
@@ -140,7 +197,87 @@ body.dark-mode {
     transform: translateY(0);
 }
 
+.sections-container {
+    margin-left: 200px;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    position: relative;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease-in-out;
+}
 
+.sections-container .section {
+    transition: all 0.3s ease;
+}
+
+.sections-container.nav-hidden {
+    margin-left: 0; 
+}
+
+
+@media (max-width: 768px) {
+    .portfolio-wrapper {
+        flex-direction: column;
+    }
+    
+    .vertical-nav {
+        position: static;
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .sections-container {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .vertical-nav {
+        display: none; 
+    }
+
+    .sections-container {
+        margin-left: 0; 
+        width: 100%;
+        height: auto;
+    }
+
+    .section {
+        height: auto; 
+        min-height: 0; 
+        padding: 15px; 
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #dark-mode-toggle {
+        max-width: 120px;
+        max-height: 40px;
+        font-size: 0.9rem;
+        bottom: 10px; 
+        left: 10px; 
+    }
+}
+
+.section:nth-child(even) {
+    background-color: var(--background-color);
+}
+
+
+.section img {
+    max-width: 100%;
+    height: auto;
+}
 
 
 
@@ -164,11 +301,11 @@ body.dark-mode {
 }
 
 .dark-mode .section h2 {
-    color: var(--secondary-color);
+    color: var(--dark-secondary-color);
 }
 
 .dark-mode .experience-item h3 {
-    color: var(--primary-color);
+    color: var(--dark-primary-color);
 }
 
 .container {
@@ -209,6 +346,10 @@ header {
     margin-bottom: 0.5rem;
 }
 
+.dark-mode .header-content h1 {
+    color: var(--secondary-color);
+}
+
 .contact-info {
     display: flex;
     justify-content: center;
@@ -218,24 +359,24 @@ header {
 
 
 .contact-info a {
-    color: var(--primary-color);
+    color: var(--secondary-color);
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .dark-mode .contact-info a {
-    color: var(--dark-text-color);
+    color: var(--dark-primary-color);
     background-color: var(--dark-card-background);
 }
 
 .section {
     background: var(--card-background);
-    margin: 2rem 0;
+    margin: 4rem 0;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .section h2 {
@@ -253,6 +394,11 @@ header {
     color: var(--secondary-color);
 }
 
+
+.dark-mode .experience-item h3,.dark-mode .education-item h3 {
+    color: var(--dark-primary-color);
+}
+
 .skills-list {
     display: flex;
     flex-wrap: wrap;
@@ -268,14 +414,14 @@ header {
 }
 
 .dark-mode .skill-badge {
-    background-color: var(--secondary-color);
+    background-color: var(--dark-secondary-color);
 }
 
 #dark-mode-toggle {
-    font-family: 'Roboto Condensed', sans-serif; /* Primary font */
+    font-family: 'Roboto Condensed', sans-serif;
     position: fixed;
-    bottom: 20px; /* Always 20px from the bottom */
-    left: 20px; /* Always 20px from the left */
+    bottom: 20px; 
+    left: 17px; 
     background-color: var(--primary-color);
     color: white;
     border: none;
@@ -289,7 +435,6 @@ header {
     z-index: 1000;
     width: auto;
     height: auto;
-    max-width: 150px;
     max-height: 50px;
     font-size: 1rem;
     box-sizing: border-box;
@@ -303,8 +448,12 @@ header {
 
 
 .dark-mode #dark-mode-toggle {
-    background-color: #2ecc71;
+    background-color: var(--dark-secondary-color);
     color: white;
+}
+
+.dark-mode #dark-mode-toggle:hover {
+    background-color: var(--dark-primary-color);
 }
 
 footer {
@@ -314,31 +463,13 @@ footer {
     padding: 1rem 0;
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
 
-    .contact-info {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #dark-mode-toggle {
-        max-width: 120px;
-        max-height: 40px;
-        font-size: 0.9rem;
-        bottom: 10px; /* Adjusted for smaller screens */
-        left: 10px; /* Adjusted for smaller screens */
-    }
-}
 
 .github-widget {
     background-color: var(--card-background);
     border-radius: 10px;
     padding: 1rem;
     margin-top: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .github-profile {
@@ -368,30 +499,19 @@ footer {
     margin-bottom: 0.5rem;
 }
 
-.top-repos a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.top-repos a:hover {
-    color: var(--dark-background);
-    text-decoration: underline;
-}
 
 .dark-mode .github-widget {
     background-color: var(--dark-card-background);
 }
 
-/* Add this to the end of your existing CSS file */
-/* GitHub Repo Link Styles */
+
 .github-repo-link {
     display: inline-block;
     padding: 10px 20px;
     margin: 5px 0;
     font-size: 1rem;
     background-color: var(--secondary-color);
-    color: white; /* Ensure text is always white for readability */
+    color: white; 
     border: none;
     border-radius: 5px;
     text-align: center;
@@ -401,27 +521,26 @@ footer {
 }
 
 .github-repo-link:hover {
-    background-color: #27ae60; /* Slightly darker shade of green */
+    background-color: var(--primary-color); 
     transform: scale(1.05);
 }
 
-/* Dark mode specific styles */
 .dark-mode .github-repo-link {
-    background-color: var(--primary-color);
-    color: white; /* Maintain white text in dark mode */
+    background-color: var(--dark-primary-color);
+    color: white;
 }
 
 .dark-mode .github-repo-link:hover {
-    background-color: #2980b9; /* Slightly darker shade of blue */
+    background-color: var(--dark-secondary-color); 
 }
 
   
-  #carouselExampleAutoplaying {
-    max-width: 600px; /* Optional: set a maximum width for the carousel */
-    margin: 20px auto; /* Center the carousel horizontally on the page */
-    border-radius: 10px; /* Optional: rounded corners */
-    overflow: hidden; /* Optional: ensure rounded corners work properly */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add shadow */
+#carouselExampleAutoplaying {
+    max-width: 600px; 
+    margin: 20px auto; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
   
 
@@ -429,7 +548,7 @@ footer {
 
 
 
-  #editor-container {
+#editor-container {
     display: flex;
     height: 500px;
     border: 1px solid #ccc;
@@ -471,7 +590,6 @@ footer {
     font-family: 'Courier New', Courier, monospace;
 }
 
-/* Basic styles for Markdown elements in the preview */
 #markdown-preview h1 {
     border-bottom: 1px solid #ccc;
     padding-bottom: 0.5em;
@@ -483,7 +601,6 @@ footer {
     margin: 1em 0;
 }
 
-/* Dark Mode Styles for Markdown */
 body.dark-mode #markdown-editor {
     background-color: var(--dark-markdown-background);
     color: var(--dark-markdown-text);
