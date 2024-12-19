@@ -259,14 +259,6 @@ body.dark-mode {
         flex-direction: column;
         align-items: center;
     }
-
-    #dark-mode-toggle {
-        max-width: 120px;
-        max-height: 40px;
-        font-size: 0.9rem;
-        bottom: 10px; 
-        left: 10px; 
-    }
 }
 
 .section:nth-child(even) {
