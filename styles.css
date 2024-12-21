@@ -1,21 +1,21 @@
 :root {
     --primary-color: #6a1b9a;
     --secondary-color: #1e88e5;
-    --background-color: #f3f0fa;
+    --background-color: #ffffff;
     --text-color: #333333;
     --card-background: #f3f0fa;
     --shadow: rgba(0, 0, 0, 0.1);
 
-    --dark-background: #1e1e1e;
+    --dark-background: #000000;
     --dark-text-color: #e0e0e0;
     --dark-primary-color: #ad2ed0;
     --dark-secondary-color: #1e88e5;
-    --dark-card-background: #1e1e1e;
+    --dark-card-background: #000000;
     --dark-shadow: rgba(0, 0, 0, 0.6);
 
-    --markdown-background: #e8e5f1;
+    --markdown-background: #ffffff;
     --markdown-text: #3c3c3c;
-    --markdown-code-background: #dcd6ef;
+    --markdown-code-background: #ffffff;
 
     --dark-markdown-background: #1c1b22;
     --dark-markdown-text: #cfcfcf;
@@ -29,10 +29,11 @@
     padding: 0;
     box-sizing: border-box;
     transition: background-color 0.3s, color 0.3s;
+    
 }
 
 body {
-    font-family: 'Roboto Condensed', sans-serif; 
+    font-family: 'kanit', sans-serif; 
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
@@ -73,11 +74,13 @@ body.dark-mode {
     width: 100vw;
     min-height: 100vh;
     overflow: hidden;
+    backdrop-filter: blur(10px);
+
 }
 
 .vertical-nav {
     width: 200px;
-    background-color: var(--background-color);
+    backdrop-filter: blur(10px);
     color: var(--primary-color);
     position: fixed;
     left: 0;
@@ -92,6 +95,8 @@ body.dark-mode {
     background-color: var(--dark-background-color);
     color: var(--dark-primary-color);
     color:var(--dark-secondary-color);
+    backdrop-filter: blur(10px);
+
 }
 
 .vertical-nav.collapsed {
@@ -108,27 +113,7 @@ body.dark-mode {
     display: none; 
 }
 
-#nav-toggle {
-    background-color: var(--background-color);
-    border: none;
-    color: var(--dark-background-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 10px;
-    width: 100%;
-    text-align: left;
-    outline: none;
-}
 
-.dark-mode #nav-toggle {
-    background-color: var(--dark-background-color);
-    color: var(--background-color);
-}
-
-
-.vertical-nav.collapsed #nav-toggle {
-    text-align: center; 
-}
 
 .vertical-nav li {
     padding: 15px 20px;
@@ -173,6 +158,8 @@ body.dark-mode {
     top: 0;
     left: 0;
     width: 100%;
+    backdrop-filter: blur(10px);
+
     height: 100%;
     opacity: 1;
     visibility: visible;
@@ -182,7 +169,6 @@ body.dark-mode {
         transform 0.5s ease, 
         visibility 0.5s;
     overflow-y: auto;
-    background: var(--card-background);
 
     min-height: 100vh;
     padding: 20px;
@@ -191,11 +177,7 @@ body.dark-mode {
     margin: 4rem;
 }
 
-.section.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
+
 
 .sections-container {
     margin-left: 200px;
@@ -259,10 +241,12 @@ body.dark-mode {
         flex-direction: column;
         align-items: center;
     }
-}
-
-.section:nth-child(even) {
-    background-color: var(--background-color);
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .about-text {
+        overflow-x: auto; 
+    }
 }
 
 
@@ -271,24 +255,8 @@ body.dark-mode {
     height: auto;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .dark-mode .section {
-    background-color: var(--dark-card-background);
+    background-color: #00000000;
     color: var(--dark-text-color);
 }
 
@@ -307,19 +275,7 @@ body.dark-mode {
     padding: 2rem 0;
 }
 
-header {
-    background-color: var(--primary-color);
-    color: var(--primary-color);
-    text-align: center;
-    padding: 2rem 0;
-}
 
-
-
-.dark-mode header {
-    color: var(--dark-text-color);
-    background-color: #2c3e50;
-}
 
 
 
@@ -361,11 +317,9 @@ header {
 
 .dark-mode .contact-info a {
     color: var(--dark-primary-color);
-    background-color: var(--dark-card-background);
 }
 
 .section {
-    background: var(--card-background);
     margin: 4rem 0;
     padding: 2rem;
     border-radius: 10px;
@@ -391,26 +345,9 @@ header {
     color: var(--dark-primary-color);
 }
 
-.skills-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
 
-.skill-badge {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-.dark-mode .skill-badge {
-    background-color: var(--dark-secondary-color);
-}
 
 #dark-mode-toggle {
-    font-family: 'Roboto Condensed', sans-serif;
     position: fixed;
     bottom: 20px; 
     left: 17px; 
@@ -448,17 +385,9 @@ header {
     background-color: var(--dark-primary-color);
 }
 
-footer {
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
-}
-
 
 
 .github-widget {
-    background-color: var(--card-background);
     border-radius: 10px;
     padding: 1rem;
     margin-top: 1rem;
@@ -630,17 +559,7 @@ body.dark-mode #markdown-preview blockquote {
 
 
 
-/* Improve responsiveness and handle text overflow */
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr; /* Stack on smaller screens */
-    }
-    .about-text {
-        overflow-x: auto; /* Enable horizontal scrolling if text overflows */
-        /* Or: use word-wrap for line breaks */
-        /* word-wrap: break-word; */
-    }
-}
+
 
 .about-playlist {
     width: 100%; /* Full width of the container */
@@ -660,4 +579,18 @@ body.dark-mode #markdown-preview blockquote {
     font-size: 1.2rem; /* Adjust to your desired size */
     line-height: 1.6; /* Improve readability */
 }
+
+#backgroundCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* Add these to your existing theme variables */
+
+
 

@@ -1,5 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const canvas = document.getElementById('backgroundCanvas');
+    const ctx = canvas.getContext('2d');
+    let circles = [];
+
+    // Set canvas size
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Circle class
+    class Circle {
+        constructor(x, y, dx, dy, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+            this.color = color;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+
+        update() {
+            if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                this.dx = -this.dx;
+            }
+            if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                this.dy = -this.dy;
+            }
+
+            this.x += this.dx;
+            this.y += this.dy;
+
+            this.draw();
+        }
+    }
+
+    // Circle colors for different themes
+    const circleColors = {
+        light: [
+            'rgba(255, 99, 132, 0.4)',    // Pink with 0.4 opacity
+            'rgba(54, 162, 235, 0.5)',    // Blue with 0.5 opacity
+            'rgba(255, 206, 86, 0.4)',    // Yellow with 0.4 opacity
+            'rgba(75, 192, 192, 0.5)',    // Teal with 0.5 opacity
+            'rgba(153, 102, 255, 0.4)'    // Purple with 0.4 opacity
+        ],
+        dark: [
+            'rgba(255, 99, 132, 0.6)',    // Pink with 0.6 opacity
+            'rgba(255, 206, 86, 0.6)',    // Yellow with 0.6 opacity
+            'rgba(75, 192, 192, 0.7)',    // Teal with 0.7 opacity
+            'rgba(153, 102, 255, 0.6)'    // Purple with 0.6 opacity
+        ]
+    };
+
+    // Create circles
+    function createCircles(theme) {
+        circles = [];
+        const colors = theme === 'dark' ? circleColors.dark : circleColors.light;
+        
+        for (let i = 0; i < 15; i++) {
+            const radius = Math.random() * 80 + 40;
+            const x = Math.random() * (canvas.width - radius * 2) + radius;
+            const y = Math.random() * (canvas.height - radius * 2) + radius;
+            const dx = (Math.random() - 0.5) * 2;
+            const dy = (Math.random() - 0.5) * 2;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            circles.push(new Circle(x, y, dx, dy, radius, color));
+        }
+    }
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        circles.forEach(circle => circle.update());
+    }
+
     // Scroll to the container header content on page load
     const headerContent = document.querySelector('.container.header-content');
     if (headerContent) {
@@ -74,10 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Dark mode toggle functionality
     darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-
+    
         // Save preference and update button text
         if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('dark-mode', 'enabled');
@@ -85,15 +171,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>🌞</span>
                 <span>Toggle Light Mode</span>
             `;
+            createCircles('dark');
         } else {
             localStorage.setItem('dark-mode', 'disabled');
             darkModeToggle.innerHTML = `
                 <span>🌙</span>
                 <span>Toggle Dark Mode</span>
             `;
+            createCircles('light');
         }
     });
 
+    const initialTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    createCircles(initialTheme);
+    animate();
 
     // GitHub Stats Fetching Function
     async function fetchGitHubStats() {
@@ -217,11 +308,5 @@ document.addEventListener('DOMContentLoaded', () => {
     sections[0].scrollIntoView({ behavior: 'smooth' });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.querySelector('.vertical-nav');
-    const toggleButton = document.getElementById('nav-toggle');
 
-    toggleButton.addEventListener('click', () => {
-        nav.classList.toggle('collapsed');
-    });
-});
+
