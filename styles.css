@@ -421,9 +421,7 @@ body.dark-mode {
 }
 
 
-.dark-mode .github-widget {
-    background-color: var(--dark-card-background);
-}
+
 
 
 .github-repo-link {
