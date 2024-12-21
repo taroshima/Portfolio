@@ -60,13 +60,13 @@ body.dark-mode {
     width: 100vw;
     min-height: 100vh;
     overflow: hidden;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 
 }
 
 .vertical-nav {
     width: 200px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     color: var(--primary-color);
     position: fixed;
     left: 0;
@@ -81,7 +81,7 @@ body.dark-mode {
     background-color: var(--dark-background-color);
     color: var(--dark-primary-color);
     color:var(--dark-secondary-color);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 
 }
 
@@ -144,7 +144,7 @@ body.dark-mode {
     top: 0;
     left: 0;
     width: 100%;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 
     height: 100%;
     opacity: 1;
