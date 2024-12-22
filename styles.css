@@ -271,6 +271,7 @@ body.dark-mode {
 .header-content h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+    color:var(--primary-color);
 }
 
 .dark-mode .header-content h1 {
