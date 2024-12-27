@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     darkModeToggle.id = 'dark-mode-toggle';
     document.body.appendChild(darkModeToggle);
 
+    // Check saved preference or default to dark mode
     const savedDarkMode = localStorage.getItem('dark-mode');
     if (savedDarkMode === 'disabled') {
         document.body.classList.remove('dark-mode');
@@ -143,16 +144,21 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>🌙</span>
             <span>Toggle Dark Mode</span>
         `;
+        createCircles('light');
     } else {
+        // Enable dark mode by default if no preference is saved
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('dark-mode', 'enabled');
         darkModeToggle.innerHTML = `
             <span>🌞</span>
             <span>Toggle Light Mode</span>
         `;
+        createCircles('dark');
     }
 
     darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-    
+
         // Save preference and update button text
         if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('dark-mode', 'enabled');
