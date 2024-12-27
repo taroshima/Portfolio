@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const circleColors = {
         light: [
-            'rgba(255, 99, 132, 0.4)',    
-            'rgba(54, 162, 235, 0.5)',    
-            'rgba(255, 206, 86, 0.4)',    
-            'rgba(75, 192, 192, 0.5)',    
-            'rgba(153, 102, 255, 0.4)'    
+            'rgb(255, 99, 133)',    
+            'rgb(54, 163, 235)',    
+            'rgb(255, 207, 86)',    
+            'rgb(75, 192, 192)',    
+            'rgb(153, 102, 255)'    
         ],
         dark: [
             'rgba(255, 99, 132, 0.6)',    
@@ -137,16 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(darkModeToggle);
 
     const savedDarkMode = localStorage.getItem('dark-mode');
-    if (savedDarkMode === 'enabled') {
-        document.body.classList.add('dark-mode');
-        darkModeToggle.innerHTML = `
-            <span>🌞</span>
-            <span>Toggle Light Mode</span>
-        `;
-    } else {
+    if (savedDarkMode === 'disabled') {
+        document.body.classList.remove('dark-mode');
         darkModeToggle.innerHTML = `
             <span>🌙</span>
             <span>Toggle Dark Mode</span>
+        `;
+    } else {
+        darkModeToggle.innerHTML = `
+            <span>🌞</span>
+            <span>Toggle Light Mode</span>
         `;
     }
 

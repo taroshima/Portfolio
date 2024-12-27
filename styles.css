@@ -526,7 +526,7 @@ body.dark-mode #markdown-preview blockquote {
     width: 100%; 
     max-width: 450px; 
     height: auto; 
-    margin: 0 auto;* Center the playlist if needed */
+    margin: 0 auto;
 }
 
 .about-playlist iframe {
