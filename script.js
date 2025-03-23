@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('dark-mode');
         darkModeToggle.innerHTML = `
             <span>🌙</span>
-            <span>Toggle Dark Mode</span>
+            <span> Dark </span>
         `;
         createCircles('light');
     } else {
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('dark-mode', 'enabled');
         darkModeToggle.innerHTML = `
             <span>🌞</span>
-            <span>Toggle Light Mode</span>
+            <span> Light </span>
         `;
         createCircles('dark');
     }
@@ -164,14 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('dark-mode', 'enabled');
             darkModeToggle.innerHTML = `
                 <span>🌞</span>
-                <span>Toggle Light Mode</span>
+                <span> Light </span>
             `;
             createCircles('dark');
         } else {
             localStorage.setItem('dark-mode', 'disabled');
             darkModeToggle.innerHTML = `
                 <span>🌙</span>
-                <span>Toggle Dark Mode</span>
+                <span> Dark </span>
             `;
             createCircles('light');
         }
@@ -180,6 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
     createCircles(initialTheme);
     animate();
+
+    
 
     // GitHub Stats Fetching Function
     async function fetchGitHubStats() {
@@ -250,42 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchGitHubStats();
 
-    const defaultMarkdown = `# Skills
-- **Technical Skills**
-  - Programming Languages
-    - Python
-    - Java
-    - C++
-    - R
-  - Libraries & Frameworks
-    - Pandas
-    - Scikit-learn
-    - TensorFlow
-- **Soft Skills**
-  - Analytical Skills
-  - Problem-Solving
-  - Communication
-- **Tools**
-  - Microsoft Office
-  - Canva
-`;
-
-    const markdownEditor = document.getElementById('markdown-editor');
-    const markdownPreview = document.getElementById('markdown-preview');
-
-    markdownEditor.value = defaultMarkdown;
-
-    function updatePreview() {
-        const markdownText = markdownEditor.value;
-        let html = marked.parse(markdownText, { breaks: true });
-        let cleanHtml = DOMPurify.sanitize(html);
-        markdownPreview.innerHTML = cleanHtml;
-    }
-
-    updatePreview();
-
-    markdownEditor.addEventListener('input', updatePreview);
-
     updateNavigation();
 
     sectionsContainer.addEventListener('scroll', updateNavigation);
@@ -294,5 +260,146 @@ document.addEventListener('DOMContentLoaded', () => {
     sections[0].scrollIntoView({ behavior: 'smooth' });
 });
 
+// skills-chart.js
+document.addEventListener('DOMContentLoaded', function() {
+    // Define your skills
+    const skills = [
+        { name: "Python", level: 90, category: "programming" },
+        { name: "Java", level: 85, category: "programming" },
+        { name: "C++", level: 80, category: "programming" },
+        { name: "R", level: 70, category: "programming" },
+    
+        { name: "Pandas", level: 80, category: "libraries" },
+        { name: "Scikit-learn", level: 80, category: "libraries" },
+        { name: "TensorFlow", level: 65, category: "libraries" },
+
+        { name: "Microsoft Office", level: 85, category: "tools" },
+        { name: "Canva", level: 80, category: "tools" },
+        { name: "Figma", level: 70, category: "tools" },
+    
+        { name: "Analytical Skills", level: 90, category: "Misc" },
+        { name: "Problem-Solving", level: 85, category: "Misc" },
+        { name: "Communication", level: 100, category: "Misc" },
+    
+        
+    ];
+    
+    
+    // Get the container element
+    const container = document.getElementById('skills-chart-container');
+    
+    // Create filter buttons
+    const categories = [...new Set(skills.map(skill => skill.category))];
+    const filtersContainer = document.createElement('div');
+    filtersContainer.className = 'skills-filters';
+    
+    categories.forEach(category => {
+      const button = document.createElement('button');
+      button.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+      button.className = 'filter-button';
+      button.dataset.category = category;
+      
+      // Add active class to 'all' button by default
+      if (category === 'programming') {
+        button.classList.add('active');
+      }
+      
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.filter-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Filter skills
+        renderSkills(this.dataset.category);
+      });
+      
+      filtersContainer.appendChild(button);
+    });
+    
+    container.appendChild(filtersContainer);
+    
+    // Create skills container
+    const skillsContainer = document.createElement('div');
+    skillsContainer.className = 'skills-list';
+    container.appendChild(skillsContainer);
+    
+    // Function to render skills based on selected category
+    function renderSkills(category = 'programming') {
+        // Clear skills container
+        skillsContainer.innerHTML = '';
+        
+        // Filter skills
+        const filteredSkills = skills.filter(skill => skill.category === category);
+        
+        // Render skills
+        filteredSkills.forEach(skill => {
+          const skillElement = document.createElement('div');
+          skillElement.className = 'skill-item';
+          
+          const skillHeader = document.createElement('div');
+          skillHeader.className = 'skill-header';
+          
+          const skillName = document.createElement('span');
+          skillName.className = 'skill-name';
+          skillName.textContent = skill.name;
+          
+          const skillLevel = document.createElement('span');
+          skillLevel.className = 'skill-level';
+          skillLevel.textContent = `${skill.level}%`;
+          
+          skillHeader.appendChild(skillName);
+          skillHeader.appendChild(skillLevel);
+          
+          const skillBar = document.createElement('div');
+          skillBar.className = 'skill-bar';
+          
+          const skillProgress = document.createElement('div');
+          skillProgress.className = 'skill-progress';
+          skillProgress.style.width = '0%'; // Start at 0 for animation
+          skillProgress.style.backgroundColor = getSkillColor(skill.level);
+          
+          // Add hover effect with description
+          const skillDescription = document.createElement('div');
+          skillDescription.className = 'skill-description';
+          skillDescription.textContent = getSkillDescription(skill.level);
+          
+          skillBar.appendChild(skillProgress);
+          skillElement.appendChild(skillHeader);
+          skillElement.appendChild(skillBar);
+          skillElement.appendChild(skillDescription);
+          
+          skillsContainer.appendChild(skillElement);
+          
+          // Animate progress bar after a small delay
+          setTimeout(() => {
+            skillProgress.style.width = `${skill.level}%`;
+          }, 100);
+        });
+      }
+    // Helper function to get color based on skill level
+    function getSkillColor(level) {
+      if (level >= 90) return '#10b981'; // Emerald
+      if (level >= 80) return '#0ea5e9'; // Sky
+      if (level >= 70) return '#6366f1'; // Indigo
+      if (level >= 60) return '#8b5cf6'; // Violet
+      return '#ec4899'; // Pink
+    }
+    
+    // Helper function to get description based on skill level
+    function getSkillDescription(level) {
+      if (level >= 90) return 'Expert';
+      if (level >= 80) return 'Advanced';
+      if (level >= 70) return 'Proficient';
+      if (level >= 60) return 'Intermediate';
+      return 'Beginner';
+    }
+    
+    // Initial render
+    renderSkills();
+  });
 
 
