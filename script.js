@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('dark-mode');
         darkModeToggle.innerHTML = `
             <span>🌙</span>
-            <span> Dark </span>
         `;
         createCircles('light');
     } else {
@@ -151,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('dark-mode', 'enabled');
         darkModeToggle.innerHTML = `
             <span>🌞</span>
-            <span> Light </span>
         `;
         createCircles('dark');
     }
@@ -163,14 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('dark-mode', 'enabled');
             darkModeToggle.innerHTML = `
                 <span>🌞</span>
-                <span> Light </span>
             `;
             createCircles('dark');
         } else {
             localStorage.setItem('dark-mode', 'disabled');
             darkModeToggle.innerHTML = `
                 <span>🌙</span>
-                <span> Dark </span>
             `;
             createCircles('light');
         }
@@ -312,7 +308,6 @@ document.addEventListener('DOMContentLoaded', function() {
           skillProgress.style.width = '0%'; // Start at 0 for animation
           skillProgress.style.backgroundColor = getSkillColor(skill.level);
           
-          // Add hover effect with description
           const skillDescription = document.createElement('div');
           skillDescription.className = 'skill-description';
           skillDescription.textContent = getSkillDescription(skill.level);
@@ -324,22 +319,20 @@ document.addEventListener('DOMContentLoaded', function() {
           
           skillsContainer.appendChild(skillElement);
           
-          // Animate progress bar after a small delay
           setTimeout(() => {
             skillProgress.style.width = `${skill.level}%`;
           }, 100);
         });
       }
-    // Helper function to get color based on skill level
+
     function getSkillColor(level) {
-      if (level >= 90) return '#10b981'; // Emerald
-      if (level >= 80) return '#0ea5e9'; // Sky
-      if (level >= 70) return '#6366f1'; // Indigo
-      if (level >= 60) return '#8b5cf6'; // Violet
+      if (level >= 90) return '#10b981'; 
+      if (level >= 80) return '#0ea5e9'; 
+      if (level >= 70) return '#6366f1'; 
+      if (level >= 60) return '#8b5cf6'; 
       return '#ec4899'; // Pink
     }
     
-    // Helper function to get description based on skill level
     function getSkillDescription(level) {
       if (level >= 90) return 'Expert';
       if (level >= 80) return 'Advanced';
@@ -348,8 +341,78 @@ document.addEventListener('DOMContentLoaded', function() {
       return 'Beginner';
     }
     
-    // Initial render
     renderSkills();
   });
 
 
+  document.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+    let hasMoved = false;
+
+    // Helper function to prevent click if dragged
+    function suppressClickOnce(el) {
+        const handler = (e) => {
+            e.stopImmediatePropagation(); // Stop other click handlers
+            e.preventDefault();
+            el.removeEventListener('click', handler, true);
+        };
+        el.addEventListener('click', handler, true);
+    }
+
+    darkModeToggle.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        hasMoved = false;
+        offsetX = e.clientX - darkModeToggle.getBoundingClientRect().left;
+        offsetY = e.clientY - darkModeToggle.getBoundingClientRect().top;
+        darkModeToggle.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            hasMoved = true;
+            const x = e.clientX - offsetX;
+            const y = e.clientY - offsetY;
+            const maxX = window.innerWidth - darkModeToggle.offsetWidth;
+            const maxY = window.innerHeight - darkModeToggle.offsetHeight;
+            darkModeToggle.style.left = `${Math.min(Math.max(0, x), maxX)}px`;
+            darkModeToggle.style.top = `${Math.min(Math.max(0, y), maxY)}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isDragging && hasMoved) suppressClickOnce(darkModeToggle);
+        isDragging = false;
+        darkModeToggle.style.cursor = 'grab';
+    });
+
+    // Touch support
+    darkModeToggle.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        hasMoved = false;
+        const touch = e.touches[0];
+        offsetX = touch.clientX - darkModeToggle.getBoundingClientRect().left;
+        offsetY = touch.clientY - darkModeToggle.getBoundingClientRect().top;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            hasMoved = true;
+            const touch = e.touches[0];
+            const x = touch.clientX - offsetX;
+            const y = touch.clientY - offsetY;
+            const maxX = window.innerWidth - darkModeToggle.offsetWidth;
+            const maxY = window.innerHeight - darkModeToggle.offsetHeight;
+            darkModeToggle.style.left = `${Math.min(Math.max(0, x), maxX)}px`;
+            darkModeToggle.style.top = `${Math.min(Math.max(0, y), maxY)}px`;
+            e.preventDefault(); // prevent scrolling while dragging
+        }
+    }, { passive: false });
+    document.addEventListener('touchend', () => {
+        if (isDragging && hasMoved) suppressClickOnce(darkModeToggle);
+        isDragging = false;
+    });
+});

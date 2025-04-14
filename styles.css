@@ -360,6 +360,9 @@ body.dark-mode {
     transform: scale(1.05);
 }
 
+#dark-mode-toggle:active {
+    cursor: grabbing; /* Changes cursor when dragging */
+}
 
 .dark-mode #dark-mode-toggle {
     background-color: var(--dark-secondary-color);
@@ -552,3 +555,53 @@ body.dark-mode {
     border-radius: 50%;
     margin-right: 5px;
   }
+
+  .footer {
+    bottom: 0;
+    left: 200px; /* Matches the width of the side navigation bar */
+    width: calc(100% - 200px); /* Ensures it doesn't overlap with the side nav */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-link {
+    color:var(--primary-color);
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--secondary-color);
+}
+
+.dark-mode .footer {
+    background-color: #00000000;
+    color: var(--dark-text-color);
+}
+
+.dark-mode .footer-link{
+    color: var(--dark-secondary-color);
+}
+
+.dark-mode .footer-link:hover {
+    color: var(--dark-primary-color);
+}
+
+@media (max-width: 768px) {
+    .footer {
+        left: 0;
+        width: 100%;
+    }
+}
