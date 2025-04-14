@@ -159,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
     darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
 
-        // Save preference and update button text
         if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('dark-mode', 'enabled');
             darkModeToggle.innerHTML = `
@@ -189,29 +188,52 @@ document.addEventListener('DOMContentLoaded', () => {
     sections[0].scrollIntoView({ behavior: 'smooth' });
 });
 
-// skills-chart.js
 document.addEventListener('DOMContentLoaded', function() {
     // Define your skills
     const skills = [
-        { name: "Python", level: 90, category: "programming" },
-        { name: "Java", level: 85, category: "programming" },
-        { name: "C++", level: 80, category: "programming" },
-        { name: "R", level: 70, category: "programming" },
+        // Programming Languages
+        { name: "Python", level: 90, category: "Programming Languages" },
+        { name: "Java", level: 85, category: "Programming Languages" },
+        { name: "C++", level: 80, category: "Programming Languages" },
+        { name: "R", level: 70, category: "Programming Languages" },
+        { name: "SQL", level: 75, category: "Programming Languages" },
     
-        { name: "Pandas", level: 80, category: "libraries" },
-        { name: "Scikit-learn", level: 80, category: "libraries" },
-        { name: "TensorFlow", level: 65, category: "libraries" },
-
-        { name: "Microsoft Office", level: 85, category: "tools" },
-        { name: "Canva", level: 80, category: "tools" },
-        { name: "Figma", level: 70, category: "tools" },
+        // Frameworks & Libraries
+        { name: "Pandas", level: 80, category: "Frameworks & Libraries" },
+        { name: "NumPy", level: 80, category: "Frameworks & Libraries" },
+        { name: "Scikit-learn", level: 80, category: "Frameworks & Libraries" },
+        { name: "TensorFlow", level: 60, category: "Frameworks & Libraries" },
+        { name: "Streamlit", level: 75, category: "Frameworks & Libraries" },
+        { name: "Matplotlib", level: 70, category: "Frameworks & Libraries" },
+        { name: "Seaborn", level: 65, category: "Frameworks & Libraries" },
     
-        { name: "Analytical Skills", level: 90, category: "Misc" },
-        { name: "Problem-Solving", level: 85, category: "Misc" },
-        { name: "Communication", level: 100, category: "Misc" },
+        // Tools & Platforms
+        { name: "Microsoft Office", level: 85, category: "Tools & Platforms" },
+        { name: "Canva", level: 80, category: "Tools & Platforms" },
+        { name: "Git", level: 80, category: "Tools & Platforms" },
+        { name: "GitHub", level: 85, category: "Tools & Platforms" },
+        { name: "Jupyter Notebook", level: 90, category: "Tools & Platforms" },
+        { name: "Google Colab", level: 85, category: "Tools & Platforms" },
+        { name: "Microsoft Planetary Computer", level: 70, category: "Tools & Platforms" },
+        { name: "Arduino", level: 60, category: "Tools & Platforms" },
+        { name: "Power BI", level: 30, category: "Tools & Platforms" },
     
-        
+        // AI/ML
+        { name: "Machine Learning", level: 85, category: "AI/ML" },
+        { name: "Unsupervised Learning", level: 80, category: "AI/ML" },
+        { name: "Deep Learning", level: 60, category: "AI/ML" },
+        { name: "LLM Prompt Engineering", level: 75, category: "AI/ML" },
+        { name: "Data Preprocessing", level: 90, category: "AI/ML" },
+    
+        // Soft Skills
+        { name: "Communication", level: 100, category: "Soft Skills" },
+        { name: "Analytical Thinking", level: 90, category: "Soft Skills" },
+        { name: "Problem Solving", level: 85, category: "Soft Skills" },
+        { name: "Team Collaboration", level: 90, category: "Soft Skills" },
+        { name: "Public Speaking", level: 85, category: "Soft Skills" },
     ];
+    
+    
     
     
     // Get the container element
@@ -228,8 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
       button.className = 'filter-button';
       button.dataset.category = category;
       
-      // Add active class to 'all' button by default
-      if (category === 'programming') {
+      if (category === 'Programming Languages') {
         button.classList.add('active');
       }
       
@@ -257,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
     container.appendChild(skillsContainer);
     
     // Function to render skills based on selected category
-    function renderSkills(category = 'programming') {
+    function renderSkills(category = 'Programming Languages') {
         // Clear skills container
         skillsContainer.innerHTML = '';
         
