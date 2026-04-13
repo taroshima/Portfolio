@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#101823"/>
+  <path d="M12 48 29 14l8 16h-9l-8 18z" fill="#0089d6"/>
+  <path d="M34 48h18L40 20l-6 12h8z" fill="#50e6ff"/>
+  <rect x="38" y="36" width="20" height="14" rx="3" fill="#07121f"/>
+  <text x="48" y="46.5" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" font-weight="700" fill="#50e6ff">ML</text>
+</svg>
