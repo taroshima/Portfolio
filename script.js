@@ -4,15 +4,49 @@ document.addEventListener("DOMContentLoaded", () => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const techMeta = {
-        python: { title: "PYTHON", systems: ["EV Anomaly Detection", "LLM Data Auditor"], focus: "ML pipelines, backend logic" },
-        azureml: { title: "AZURE ML", systems: ["Predictive analytics deployment", "Experiment flow"], focus: "Model deployment and tracking" },
-        pytorch: { title: "PYTORCH", systems: ["GRU autoencoder research", "Telemetry behavior modeling"], focus: "Deep learning experimentation" },
-        rag: { title: "RAG", systems: ["Retrieval context layering", "Validation augmentation"], focus: "Contextual validation pipeline" },
-        llm: { title: "LLM ORCHESTRATION", systems: ["Document inconsistency detection", "Voice-to-data transformation"], focus: "Prompt pipelines and orchestration" },
-        streamlit: { title: "STREAMLIT", systems: ["Interactive analytics interfaces", "Rapid model demos"], focus: "Operational UI for data tools" },
-        sql: { title: "SQL", systems: ["Telemetry querying", "Structured validation workflows"], focus: "Data shaping and querying" }
+        python: {
+            title: "PYTHON",
+            where: "Used in EV anomaly detection, LLM data auditor, and voice-to-data assistant backends.",
+            focus: "Role: Core language for ML pipelines and backend logic."
+        },
+        azureml: {
+            title: "AZURE ML",
+            where: "Used in the Canary AI predictive analytics deployment workflow.",
+            focus: "Role: Experiment tracking, model packaging, and cloud deployment."
+        },
+        pandas: {
+            title: "PANDAS",
+            where: "Used for tabular preprocessing, exploratory analysis, and dataset shaping.",
+            focus: "Role: Data cleaning, wrangling, and analysis workflows."
+        },
+        pytorch: {
+            title: "PYTORCH",
+            where: "Used for GRU autoencoder training on electric two-wheeler telemetry.",
+            focus: "Role: Deep learning model development and validation."
+        },
+        rag: {
+            title: "RAG",
+            where: "Used inside the automated data auditor to ground checks on source context.",
+            focus: "Role: Retrieval layer for reliable LLM outputs."
+        },
+        llm: {
+            title: "LLM ORCHESTRATION",
+            where: "Used in both the LLM auditor and voice command structuring assistant.",
+            focus: "Role: Prompt workflows and inference routing."
+        },
+        streamlit: {
+            title: "STREAMLIT",
+            where: "Used for internal analytics demos and quick operator-facing interfaces.",
+            focus: "Role: Fast UI layer for AI and data tools."
+        },
+        sql: {
+            title: "SQL",
+            where: "Used in telemetry analysis and structured validation routines.",
+            focus: "Role: Querying, filtering, and shaping relational data."
+        }
     };
 
+    initCustomCursor();
     initHeroInteractions();
     initExperienceHorizontalScroll();
     initSectionModeSignals();
@@ -20,11 +54,75 @@ document.addEventListener("DOMContentLoaded", () => {
     initInnovationHint();
     initProjectInteractions();
     initScrollVelocityAwareness();
-    initTechStackRunway();
-    initTechStackContextCard();
-    initFloatingTechTerminal();
+    initTechStackCubes();
     initEducationBoot();
     initFooterInteractions();
+
+    function initCustomCursor() {
+        const supportsFinePointer = window.matchMedia("(pointer: fine)").matches;
+        if (!supportsFinePointer) return;
+
+        const dot = document.querySelector("#customCursorDot");
+        const ring = document.querySelector("#customCursorRing");
+        if (!dot || !ring) return;
+
+        document.body.classList.add("customCursorOn");
+
+        let mouseX = window.innerWidth * 0.5;
+        let mouseY = window.innerHeight * 0.5;
+        let ringX = mouseX;
+        let ringY = mouseY;
+        let cursorRaf = null;
+
+        const moveCursor = () => {
+            ringX += (mouseX - ringX) * 0.18;
+            ringY += (mouseY - ringY) * 0.18;
+            dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+            cursorRaf = window.requestAnimationFrame(moveCursor);
+        };
+
+        cursorRaf = window.requestAnimationFrame(moveCursor);
+
+        const interactiveSelector = "a, button, .techCube, .projectCard, [role='button']";
+        const interactiveElements = document.querySelectorAll(interactiveSelector);
+
+        const activate = () => document.body.classList.add("cursorActive");
+        const deactivate = () => document.body.classList.remove("cursorActive");
+
+        interactiveElements.forEach((element) => {
+            element.addEventListener("mouseenter", activate);
+            element.addEventListener("mouseleave", deactivate);
+            element.addEventListener("focus", activate);
+            element.addEventListener("blur", deactivate);
+        });
+
+        document.addEventListener("mousemove", (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+
+        document.addEventListener("mouseenter", () => {
+            document.body.classList.add("cursorVisible");
+        });
+
+        document.addEventListener("mouseleave", () => {
+            document.body.classList.remove("cursorVisible");
+            document.body.classList.remove("cursorActive");
+        });
+
+        document.addEventListener("mousedown", () => {
+            document.body.classList.add("cursorDown");
+        });
+
+        document.addEventListener("mouseup", () => {
+            document.body.classList.remove("cursorDown");
+        });
+
+        window.addEventListener("beforeunload", () => {
+            if (cursorRaf) window.cancelAnimationFrame(cursorRaf);
+        });
+    }
 
     function initHeroInteractions() {
         const heroTitle = document.querySelector("#heroTitle");
@@ -156,117 +254,162 @@ document.addEventListener("DOMContentLoaded", () => {
         if (expand && card) expand.addEventListener("click", () => card.classList.toggle("expanded"));
     }
 
-    function initTechStackRunway() {
-        const runwayShell = document.querySelector("#runwayShell");
-        const runway = document.querySelector("#logoRunway");
-        const firstLane = document.querySelector(".logoLane");
-        if (!runwayShell || !runway || !firstLane) return;
+    function initTechStackCubes() {
+        const cubes = document.querySelectorAll(".techCube[data-tech]");
+        const dialogue = document.querySelector("#techDialogue");
+        const title = document.querySelector("#techDialogueTitle");
+        const where = document.querySelector("#techDialogueWhere");
+        const focus = document.querySelector("#techDialogueFocus");
+        if (cubes.length === 0 || !dialogue || !title || !where || !focus) return;
 
-        let animationFrame = null;
-        let offset = 0;
-        let velocity = 0.45;
-        let isPaused = false;
-        let isDragging = false;
-        let dragStartX = 0;
-        let offsetAtDragStart = 0;
-        const laneWidth = () => firstLane.getBoundingClientRect().width;
+        const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-        function normalizeOffset() {
-            const width = laneWidth();
-            if (!width) return;
-            offset = ((offset % width) + width) % width;
-            offset = offset === 0 ? 0 : offset - width;
-        }
+        const cubeStates = [...cubes].map((cube) => {
+            const body = cube.querySelector(".techCubeBody");
+            if (!body) return null;
+            const logo = cube.dataset.logo || "";
+            const label = cube.dataset.label || "";
 
-        function step() {
-            if (!isPaused && !isDragging && !reduceMotion) {
-                offset -= velocity;
-                normalizeOffset();
-                runway.style.transform = `translate3d(${offset}px,0,0)`;
-            }
-            animationFrame = window.requestAnimationFrame(step);
-        }
+            cube.setAttribute("aria-label", `${label} technology cube`);
 
-        runwayShell.addEventListener("mouseenter", () => { isPaused = true; });
-        runwayShell.addEventListener("mouseleave", () => {
-            isPaused = false;
-            runwayShell.classList.remove("isDragging");
-            isDragging = false;
-        });
-        runwayShell.addEventListener("pointerdown", (event) => {
-            isDragging = true;
-            isPaused = true;
-            dragStartX = event.clientX;
-            offsetAtDragStart = offset;
-            runwayShell.classList.add("isDragging");
-            runwayShell.setPointerCapture(event.pointerId);
-        });
-        runwayShell.addEventListener("pointermove", (event) => {
-            if (!isDragging) return;
-            offset = offsetAtDragStart + (event.clientX - dragStartX);
-            normalizeOffset();
-            runway.style.transform = `translate3d(${offset}px,0,0)`;
-        });
-        runwayShell.addEventListener("pointerup", (event) => {
-            if (!isDragging) return;
-            runwayShell.releasePointerCapture(event.pointerId);
-            runwayShell.classList.remove("isDragging");
-            isDragging = false;
-            isPaused = false;
-            normalizeOffset();
-        });
+            cube.querySelectorAll(".cubeFace").forEach((face) => {
+                face.innerHTML = `<span class="cubeContent"><img src="${logo}" alt=""><span class="mono">${label}</span></span>`;
+            });
 
-        if (!reduceMotion) animationFrame = window.requestAnimationFrame(step);
-        window.addEventListener("beforeunload", () => animationFrame && window.cancelAnimationFrame(animationFrame));
-    }
+            const delay = Number.parseFloat(getComputedStyle(cube).getPropertyValue("--cube-delay")) || 0;
+            return {
+                cube,
+                body,
+                baseX: -16,
+                baseY: 18 + delay * 12,
+                baseZ: 0,
+                baseMoveX: 0,
+                baseMoveY: 0,
+                spinSpeed: 0.05 + Math.random() * 0.03,
+                dragRotateX: 0,
+                dragRotateY: 0,
+                dragMoveX: 0,
+                dragMoveY: 0,
+                dragging: false,
+                hovered: false,
+                pointerStartX: 0,
+                pointerStartY: 0
+            };
+        }).filter(Boolean);
 
-    function initTechStackContextCard() {
-        const title = document.querySelector("#contextTitle");
-        const systems = document.querySelector("#contextSystems");
-        const focus = document.querySelector("#contextFocus");
-        const logoItems = document.querySelectorAll(".logoItem[data-tech]");
-        if (!title || !systems || !focus || logoItems.length === 0) return;
+        const setDialoguePosition = (x, y) => {
+            const pad = 14;
+            const maxLeft = window.innerWidth - dialogue.offsetWidth - 8;
+            const maxTop = window.innerHeight - dialogue.offsetHeight - 8;
+            dialogue.style.left = `${clamp(x + pad, 8, maxLeft)}px`;
+            dialogue.style.top = `${clamp(y + pad, 8, maxTop)}px`;
+        };
 
-        function updateContext(techKey) {
-            const data = techMeta[techKey];
+        const showDialogue = (cube, clientX, clientY) => {
+            const data = techMeta[cube.dataset.tech];
             if (!data) return;
             title.textContent = data.title;
-            systems.innerHTML = data.systems.map((item) => `<li>${item}</li>`).join("");
-            focus.textContent = `> Usage: ${data.focus}`;
-        }
+            where.textContent = data.where;
+            focus.textContent = data.focus;
+            dialogue.style.display = "block";
+            dialogue.setAttribute("aria-hidden", "false");
+            setDialoguePosition(clientX, clientY);
+        };
 
-        logoItems.forEach((item) => {
-            item.addEventListener("mouseenter", () => {
-                logoItems.forEach((logo) => logo.classList.remove("isActive"));
-                item.classList.add("isActive");
-                updateContext(item.dataset.tech);
+        const hideDialogue = () => {
+            dialogue.style.display = "none";
+            dialogue.setAttribute("aria-hidden", "true");
+        };
+
+        cubeStates.forEach((state) => {
+            const { cube } = state;
+            cube.addEventListener("mouseenter", (event) => {
+                state.hovered = true;
+                showDialogue(cube, event.clientX, event.clientY);
             });
-            item.addEventListener("pointerdown", () => {
-                logoItems.forEach((logo) => logo.classList.remove("isActive"));
-                item.classList.add("isActive");
-                updateContext(item.dataset.tech);
+
+            cube.addEventListener("mousemove", (event) => {
+                setDialoguePosition(event.clientX, event.clientY);
             });
+
+            cube.addEventListener("mouseleave", () => {
+                state.hovered = false;
+                hideDialogue();
+            });
+
+            cube.addEventListener("focus", () => {
+                const rect = cube.getBoundingClientRect();
+                showDialogue(cube, rect.right - 10, rect.top + 12);
+            });
+
+            cube.addEventListener("blur", hideDialogue);
+
+            cube.addEventListener("pointerdown", (event) => {
+                state.dragging = true;
+                state.pointerStartX = event.clientX;
+                state.pointerStartY = event.clientY;
+                cube.classList.add("isDragging");
+                cube.setPointerCapture(event.pointerId);
+            });
+
+            cube.addEventListener("pointermove", (event) => {
+                if (!state.dragging) return;
+                const dx = event.clientX - state.pointerStartX;
+                const dy = event.clientY - state.pointerStartY;
+
+                state.dragMoveX = clamp(dx * 0.16, -18, 18);
+                state.dragMoveY = clamp(dy * 0.16, -18, 18);
+                state.dragRotateY = clamp(dx * 0.28, -42, 42);
+                state.dragRotateX = clamp(-dy * 0.24, -36, 36);
+
+                setDialoguePosition(event.clientX, event.clientY);
+            });
+
+            const endDrag = (event) => {
+                if (!state.dragging) return;
+                state.dragging = false;
+                cube.classList.remove("isDragging");
+                if (event.pointerId !== undefined && cube.hasPointerCapture(event.pointerId)) {
+                    cube.releasePointerCapture(event.pointerId);
+                }
+
+                // Keep the user-edited orientation and drag offset as the new resting state.
+                state.baseX += state.dragRotateX;
+                state.baseY += state.dragRotateY;
+                state.baseMoveX = clamp(state.baseMoveX + state.dragMoveX, -22, 22);
+                state.baseMoveY = clamp(state.baseMoveY + state.dragMoveY, -22, 22);
+                state.dragRotateX = 0;
+                state.dragRotateY = 0;
+                state.dragMoveX = 0;
+                state.dragMoveY = 0;
+                if (!state.hovered) hideDialogue();
+            };
+
+            cube.addEventListener("pointerup", endDrag);
+            cube.addEventListener("pointercancel", endDrag);
         });
-    }
 
-    function initFloatingTechTerminal() {
-        const floating = document.querySelector("#floatingTerminal");
-        const items = document.querySelectorAll(".logoItem[data-tech]");
-        if (!floating || items.length === 0) return;
-        items.forEach((item) => {
-            item.addEventListener("mouseenter", (event) => {
-                const data = techMeta[item.dataset.tech];
-                if (!data) return;
-                floating.style.display = "block";
-                floating.innerHTML = `<strong>${data.title}</strong><br><br>&gt; Systems:<br>${data.systems.join("<br>")}<br><br>&gt; Usage:<br>${data.focus}`;
-                floating.style.left = `${event.clientX + 14}px`;
-                floating.style.top = `${event.clientY + 14}px`;
+        let rafId = null;
+        let lastTime = performance.now();
+
+        const animateCubes = (now) => {
+            const dt = Math.max(now - lastTime, 16);
+            lastTime = now;
+
+            cubeStates.forEach((state) => {
+                if (!state.hovered && !state.dragging && !reduceMotion) {
+                    state.baseY += state.spinSpeed * (dt / 16);
+                }
+
+                state.body.style.transform = `translate3d(${state.baseMoveX + state.dragMoveX}px, ${state.baseMoveY + state.dragMoveY}px, 0px) rotateX(${state.baseX + state.dragRotateX}deg) rotateY(${state.baseY + state.dragRotateY}deg) rotateZ(${state.baseZ}deg)`;
             });
-            item.addEventListener("mousemove", (event) => {
-                floating.style.left = `${event.clientX + 14}px`;
-                floating.style.top = `${event.clientY + 14}px`;
-            });
-            item.addEventListener("mouseleave", () => { floating.style.display = "none"; });
+
+            rafId = window.requestAnimationFrame(animateCubes);
+        };
+
+        rafId = window.requestAnimationFrame(animateCubes);
+        window.addEventListener("beforeunload", () => {
+            if (rafId) window.cancelAnimationFrame(rafId);
         });
     }
 

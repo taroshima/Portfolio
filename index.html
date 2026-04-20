@@ -12,6 +12,8 @@
 </head>
 <body>
     <div class="grid-layer" aria-hidden="true"></div>
+    <div class="customCursorDot" id="customCursorDot" aria-hidden="true"></div>
+    <div class="customCursorRing" id="customCursorRing" aria-hidden="true"></div>
 
     <main class="site">
         <section id="hero" class="heroSection section">
@@ -115,42 +117,100 @@
         <section id="tech-stack" class="techStackSection section">
             <div class="contentWrap">
                 <p class="sectionKicker mono">[ TECH STACK // ACTIVE RUNTIME ]</p>
-                <p class="sectionSubtext">Technologies applied in real systems, not just listed.</p>
-                <p class="mono overlayTitle">SYSTEM LOADOUT: Applied AI Systems &amp; Data Intelligence</p>
+                <p class="sectionSubtext">Technologies applied in real systems.</p>
+                <button class="techCube" data-tech="python" data-logo="https://cdn.simpleicons.org/python/3776AB" data-label="PYTHON" style="--cube-delay: 0s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
 
-                <div class="runwayShell" id="runwayShell">
-                    <div class="logoRunway" id="logoRunway">
-                        <div class="logoLane">
-                            <button class="logoItem" data-tech="python"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python"><span class="mono">PYTHON</span></button>
-                            <button class="logoItem" data-tech="azureml"><img src="assets/logos/azureml.svg" alt="Azure ML"><span class="mono">AZURE ML</span></button>
-                            <button class="logoItem" data-tech="pytorch"><img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch"><span class="mono">PYTORCH</span></button>
-                            <button class="logoItem" data-tech="rag"><img src="assets/logos/rag.svg" alt="RAG"><span class="mono">RAG</span></button>
-                            <button class="logoItem" data-tech="llm"><img src="assets/logos/llm.svg" alt="LLM"><span class="mono">LLM</span></button>
-                            <button class="logoItem" data-tech="streamlit"><img src="https://cdn.simpleicons.org/streamlit/FF4B4B" alt="Streamlit"><span class="mono">STREAMLIT</span></button>
-                            <button class="logoItem" data-tech="sql"><img src="assets/logos/sql.svg" alt="SQL"><span class="mono">SQL</span></button>
-                        </div>
-                        <div class="logoLane" aria-hidden="true">
-                            <button class="logoItem" tabindex="-1"><img src="https://cdn.simpleicons.org/python/3776AB" alt=""><span class="mono">PYTHON</span></button>
-                            <button class="logoItem" tabindex="-1"><img src="assets/logos/azureml.svg" alt=""><span class="mono">AZURE ML</span></button>
-                            <button class="logoItem" tabindex="-1"><img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt=""><span class="mono">PYTORCH</span></button>
-                            <button class="logoItem" tabindex="-1"><img src="assets/logos/rag.svg" alt=""><span class="mono">RAG</span></button>
-                            <button class="logoItem" tabindex="-1"><img src="assets/logos/llm.svg" alt=""><span class="mono">LLM</span></button>
-                            <button class="logoItem" tabindex="-1"><img src="https://cdn.simpleicons.org/streamlit/FF4B4B" alt=""><span class="mono">STREAMLIT</span></button>
-                            <button class="logoItem" tabindex="-1"><img src="assets/logos/sql.svg" alt=""><span class="mono">SQL</span></button>
-                        </div>
-                    </div>
+                <button class="techCube" data-tech="azureml" data-logo="assets/logos/azureml.svg" data-label="AZURE ML" style="--cube-delay: -1.2s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <button class="techCube" data-tech="pytorch" data-logo="https://cdn.simpleicons.org/pytorch/EE4C2C" data-label="PYTORCH" style="--cube-delay: -2s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <button class="techCube" data-tech="pandas" data-logo="assets/logos/pandas.svg" data-label="PANDAS" style="--cube-delay: -0.5s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <button class="techCube" data-tech="rag" data-logo="assets/logos/rag.svg" data-label="RAG" style="--cube-delay: -0.6s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <button class="techCube" data-tech="llm" data-logo="assets/logos/llm.svg" data-label="LLM" style="--cube-delay: -1.7s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <button class="techCube" data-tech="streamlit" data-logo="https://cdn.simpleicons.org/streamlit/FF4B4B" data-label="STREAMLIT" style="--cube-delay: -2.4s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <button class="techCube" data-tech="sql" data-logo="assets/logos/sql.svg" data-label="SQL" style="--cube-delay: -0.9s; --cube-size: 100px;">
+                    <span class="techCubeBody">
+                        <span class="cubeFace cubeFront"></span>
+                        <span class="cubeFace cubeBack"></span>
+                        <span class="cubeFace cubeRight"></span>
+                        <span class="cubeFace cubeLeft"></span>
+                        <span class="cubeFace cubeTop"></span>
+                        <span class="cubeFace cubeBottom"></span>
+                    </span>
+                </button>
+
+                <div class="techDialogue mono" id="techDialogue" role="status" aria-live="polite" aria-hidden="true">
+                    <h3 id="techDialogueTitle">PYTHON</h3>
+                    <p id="techDialogueWhere">Used in EV anomaly detection and data auditing workflows.</p>
+                    <p id="techDialogueFocus">Role: ML pipelines and backend system logic.</p>
                 </div>
-
-                <article class="techContext mono" id="techContext">
-                    <h3 id="contextTitle">PYTHON</h3>
-                    <p>&gt; Systems:</p>
-                    <ul id="contextSystems">
-                        <li>EV Anomaly Detection (GRU Autoencoder)</li>
-                        <li>LLM Data Auditor</li>
-                        <li>Voice-to-Data Assistant</li>
-                    </ul>
-                    <p id="contextFocus">&gt; Focus: Data pipelines, ML systems, backend logic</p>
-                </article>
             </div>
         </section>
 

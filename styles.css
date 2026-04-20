@@ -31,6 +31,60 @@ body {
     --grid-shift: 0px;
 }
 
+@media (pointer: fine) {
+    body.customCursorOn,
+    body.customCursorOn * {
+        cursor: none !important;
+    }
+
+    .customCursorDot,
+    .customCursorRing {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .customCursorDot {
+        width: 7px;
+        height: 7px;
+        margin-left: -3.5px;
+        margin-top: -3.5px;
+        border-radius: 50%;
+        background: #efe5ff;
+        box-shadow: 0 0 12px rgba(199, 165, 255, 0.95);
+    }
+
+    .customCursorRing {
+        width: 32px;
+        height: 32px;
+        margin-left: -16px;
+        margin-top: -16px;
+        border-radius: 50%;
+        border: 1px solid rgba(199, 165, 255, 0.85);
+        box-shadow: 0 0 18px rgba(181, 137, 255, 0.34), inset 0 0 8px rgba(181, 137, 255, 0.18);
+        backdrop-filter: blur(1px);
+    }
+
+    body.customCursorOn.cursorVisible .customCursorDot,
+    body.customCursorOn.cursorVisible .customCursorRing {
+        opacity: 1;
+    }
+
+    body.customCursorOn.cursorActive .customCursorRing {
+        transform: scale(1.3);
+        border-color: rgba(233, 221, 255, 0.98);
+        box-shadow: 0 0 24px rgba(199, 165, 255, 0.52), inset 0 0 14px rgba(199, 165, 255, 0.24);
+    }
+
+    body.customCursorOn.cursorDown .customCursorRing {
+        transform: scale(0.82);
+    }
+}
+
 body.fastScroll .section,
 body.fastScroll .projectCard,
 body.fastScroll .logoItem {
@@ -393,95 +447,141 @@ body.inWorkHistory .experienceProgress {
     letter-spacing: 0.08em;
 }
 
-.runwayShell {
-    border: 1px solid var(--line);
-    overflow: hidden;
-    padding: 1rem 0;
+.techStackSection .contentWrap {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.8rem;
+    align-items: start;
+}
+
+.techStackSection .sectionKicker,
+.techStackSection .sectionSubtext,
+.techStackSection .overlayTitle,
+.techStackSection .techDialogue {
+    grid-column: 1 / -1;
+}
+
+.techCube {
+    --cube-size: 100px;
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border: 0;
+    background: transparent;
+    color: var(--text);
     cursor: grab;
+    justify-self: center;
+    align-self: center;
+    transition: filter 0.22s ease;
+    perspective: 1200px;
 }
 
-.runwayShell.isDragging {
+.techCube:hover,
+.techCube:focus-visible {
+    filter: drop-shadow(0 0 20px rgba(181, 137, 255, 0.3));
+    z-index: 3;
+}
+
+.techCube.isDragging {
     cursor: grabbing;
+    z-index: 5;
 }
 
-.logoRunway {
-    display: flex;
-    gap: 0;
-    width: max-content;
+.techCube:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 4px;
+}
+
+.techCubeBody {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    transform-style: preserve-3d;
+    transform: rotateX(-16deg) rotateY(var(--cube-rotate-y, 0deg)) rotateZ(var(--cube-tilt, 0deg));
     will-change: transform;
 }
 
-.logoLane {
+.cubeFace {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(193, 163, 255, 0.58);
+    background: linear-gradient(145deg, rgba(34, 26, 58, 1), rgba(18, 15, 32, 0.98));
+    box-shadow: inset 0 0 10px rgba(193, 163, 255, 0.12);
+    border-radius: 0;
+    overflow: hidden;
     display: flex;
-    gap: 1rem;
-}
-
-.logoItem {
-    min-width: 124px;
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--text-dim);
-    padding: 0.85rem 0.7rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
     align-items: center;
     justify-content: center;
 }
 
-.logoItem img {
-    width: 44px;
-    height: 44px;
+.cubeContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.38rem;
+    text-align: center;
 }
 
-.logoItem span {
-    font-size: 0.66rem;
-    letter-spacing: 0.07em;
+.cubeContent img {
+    width: 34px;
+    height: 34px;
 }
 
-.logoItem:hover,
-.logoItem.isActive {
-    border-color: var(--accent-strong);
-    color: var(--accent-strong);
+.cubeContent span {
+    font-size: 0.61rem;
+    letter-spacing: 0.08em;
+    color: #efe8ff;
 }
 
-.logoItem:hover img,
-.logoItem.isActive img {
-    transform: scale(1.04);
+.cubeFront {
+    transform: translateZ(calc(var(--cube-size) / 2));
 }
 
-.techContext {
-    margin-top: 1rem;
-    border: 1px solid var(--line);
-    padding: 1rem;
-    background: rgba(10, 10, 17, 0.75);
+.cubeBack {
+    transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2));
 }
 
-.floatingTerminal {
+.cubeRight {
+    transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.cubeLeft {
+    transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.cubeTop {
+    transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.cubeBottom {
+    transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.techDialogue {
     position: fixed;
-    z-index: 20;
+    z-index: 30;
+    width: min(270px, 78vw);
     display: none;
-    min-width: 240px;
-    max-width: 280px;
     border: 1px solid var(--line);
-    background: rgba(10, 10, 17, 0.95);
-    color: var(--accent-strong);
-    font-size: 0.72rem;
-    padding: 0.6rem;
+    background: rgba(8, 8, 14, 0.96);
+    color: var(--text);
+    padding: 0.62rem 0.72rem;
+    font-size: 0.7rem;
+    line-height: 1.45;
     pointer-events: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+.techDialogue h3 {
+    color: var(--accent-strong);
+    font-size: 0.74rem;
+    margin-bottom: 0.32rem;
 }
 
-.techContext h3 {
-    margin-bottom: 0.7rem;
-}
-
-.techContext ul {
-    margin: 0.3rem 0 0.7rem 1rem;
-    color: var(--text-dim);
-}
-
-.techContext li + li {
-    margin-top: 0.25rem;
+.techDialogue p + p {
+    margin-top: 0.26rem;
 }
 
 .educationSection {
@@ -587,6 +687,11 @@ body.inWorkHistory .experienceProgress {
     .projectGrid {
         grid-template-columns: 1fr;
     }
+
+    .techStackSection .contentWrap {
+        grid-template-columns: repeat(3, minmax(140px, 1fr));
+        gap: 1.6rem 1.2rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -619,6 +724,24 @@ body.inWorkHistory .experienceProgress {
         align-items: flex-start;
     }
 
+    .techStackSection .contentWrap {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.2rem 0.8rem;
+    }
+
+    .techCube {
+        width: min(118px, 100%);
+        height: 118px;
+        --cube-size: 86px !important;
+    }
+
+}
+
+@media (max-width: 460px) {
+    .techStackSection .contentWrap {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -626,7 +749,12 @@ body.inWorkHistory .experienceProgress {
         scroll-behavior: auto;
     }
 
-    .logoRunway {
-        transform: none !important;
+    .techCube {
+        animation: none;
+    }
+
+    .techCubeBody {
+        animation: none !important;
+        transform: rotateX(-16deg) rotateY(0deg) rotateZ(0deg) !important;
     }
 }
