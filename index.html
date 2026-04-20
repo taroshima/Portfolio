@@ -3,260 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarosh Jayaprakash - Portfolio</title>
-    
+    <title>Tarosh Jayaprakash - Software Engineer</title>
+    <meta name="description" content="Tarosh Jayaprakash portfolio - Applied AI and Data Systems">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Ruda:wght@400..900&display=swap" rel="stylesheet">
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>    
-
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <canvas id="backgroundCanvas"></canvas>
+    <div class="grid-layer" aria-hidden="true"></div>
 
-    <div class="portfolio-wrapper">
-        <div class="vertical-nav">
-            <div class="nav-indicator"></div>
-            <ul>
-                <li data-section="header" class="active">Home</li>
-                <li data-section="experience">Experience</li>
-                <li data-section="projects">Projects</li>
-                <li data-section="skills">Skills</li>
-                <li data-section="education">Education</li>
-                <li data-section="about">About</li>
-            </ul>
-        </div>
+    <main class="site">
+        <section id="hero" class="heroSection section">
+            <div class="contentWrap heroWrap">
+                <p class="sectionKicker mono">[ IDENTITY_LAYER ]</p>
+                <h1 class="heroTitle">TAROSH JAYAPRAKASH</h1>
+                <p class="heroRole mono">SOFTWARE ENGINEER // APPLIED AI &amp; DATA SYSTEMS</p>
+                <p class="heroMeta mono">Bengaluru, India // Open to Global Opportunities</p>
+                <p class="heroTagline">Building intelligent systems that translate data into decisions.</p>
+                <div class="heroLinks mono">
+                    <a href="mailto:jtarosh@gmail.com">EMAIL</a>
+                    <a href="https://github.com/taroshima" target="_blank" rel="noopener">GITHUB</a>
+                    <a href="https://www.linkedin.com/in/tarosh-jayaprakash-0bb5951ab/" target="_blank" rel="noopener">LINKEDIN</a>
+                </div>
+            </div>
+        </section>
 
-        <div class="sections-container">
-            <header id="header" class="section active">
-                <div class="container header-content">
-                    <h1>Tarosh Jayaprakash</h1>
-                    <div class="contact-info">
-                        <a href="mailto:jtarosh@gmail.com">
-                            <i class="fas fa-envelope"></i> 
-                        </a>
-                        <a href="https://www.linkedin.com/in/tarosh-jayaprakash-0bb5951ab/" target="_blank">
-                            <i class="fab fa-linkedin"></i> 
-                        </a>
-                        <a href="https://github.com/taroshima" target="_blank">
-                            <i class="fab fa-github"></i> 
-                        </a>
+        <section id="experience" class="experienceSection section">
+            <div class="experiencePin">
+                <div class="experienceTrack">
+                    <article class="experiencePanel">
+                        <div class="panelContent">
+                            <p class="panelKicker mono">EXPERIENCE</p>
+                            <h2>Canary AI | AI Intern</h2>
+                            <p class="panelMeta mono">May 2025 - Present | Hyderabad</p>
+                            <div class="panelBlock">
+                                <h3>System Deployment</h3>
+                                <p>Architected and deployed a predictive analytics system using Azure Machine Learning, achieving 81% accuracy on key business predictions.</p>
+                            </div>
+                            <div class="panelBlock">
+                                <h3>Automation Systems</h3>
+                                <p>Built and productionized an AI-driven voice interview pipeline, reducing recruiter manual screening effort by ~75%.</p>
+                            </div>
+                            <div class="panelBlock">
+                                <h3>Vision Intelligence</h3>
+                                <p>Developed a video interview analysis workflow using Azure Video Indexer to evaluate candidate sentiment and performance.</p>
+                            </div>
+                            <div class="panelBlock">
+                                <h3>Data Analytics</h3>
+                                <p>Analyzed multi-company attrition datasets to generate interactive dashboards identifying churn drivers and high-risk segments.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="experiencePanel">
+                        <div class="panelContent">
+                            <p class="panelKicker mono">EXPERIENCE</p>
+                            <h2>EY Global Delivery Services | AI Intern</h2>
+                            <p class="panelMeta mono">May 2024 - July 2024 | Bengaluru</p>
+                            <div class="panelBlock">
+                                <h3>Geospatial Intelligence</h3>
+                                <p>Processed large-scale geospatial datasets using Microsoft Planetary Computer.</p>
+                            </div>
+                            <div class="panelBlock">
+                                <h3>Environmental Modeling</h3>
+                                <p>Modeled land-use patterns using remote sensing telemetry for strategic environmental insights.</p>
+                            </div>
+                            <div class="panelBlock">
+                                <h3>Analytical Stack</h3>
+                                <p>Worked extensively with Python, R, and statistical models to convert raw geospatial data into actionable outputs.</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="innovation" class="innovationSection section">
+            <div class="contentWrap">
+                <p class="sectionKicker mono">[ RESEARCH &amp; INNOVATION // 01 ]</p>
+                <h2 class="sectionTitle">A Device and Method for Detecting Anomalies in Electric Two-Wheelers</h2>
+                <p class="mono infoLine">APPLICATION NO: 202541080133</p>
+                <p class="contributors">Dr. Ashok B, Dr. Gunavathi C, Rudraksh Srivastava, Tarosh Jayaprakash</p>
+                <p class="innovationText">Developed an anomaly detection framework using over 100,000+ telemetry records from electric two-wheelers. The system leverages unsupervised learning (GRU-based autoencoder) to identify abnormal driving patterns and system-level anomalies.</p>
+                <p class="impactSignal mono">IMPACT SIGNAL: Addresses a gap in EV-specific behavioral intelligence and anomaly detection.</p>
+            </div>
+        </section>
+
+        <section id="project-lab" class="projectLabSection section">
+            <div class="contentWrap">
+                <p class="sectionKicker mono">[ PROJECT LAB // APPLIED SYSTEMS ]</p>
+                <div class="projectGrid">
+                    <article class="projectCard">
+                        <p class="cardIndex mono">01</p>
+                        <h3>LLM-Based Automated Data Auditor</h3>
+                        <p>Engineered an automated auditing system using LLM-driven evaluation pipelines to detect inconsistencies in complex datasets and documents.</p>
+                        <p><span class="mono cardLabel">Impact:</span> Improved data reliability by introducing structured validation loops for unstructured and semi-structured inputs.</p>
+                        <p><span class="mono cardLabel">Stack:</span> Python, RAG, LLM Orchestration</p>
+                    </article>
+                    <article class="projectCard">
+                        <p class="cardIndex mono">02</p>
+                        <h3>Voice-to-Data Structuring Assistant</h3>
+                        <p>Built a real-time voice-enabled system that converts unstructured user commands into structured, analysis-ready data.</p>
+                        <p><span class="mono cardLabel">Core Capability:</span> Bridges natural language input with data pipelines for immediate downstream processing.</p>
+                        <p><span class="mono cardLabel">Use Case:</span> Designed to eliminate manual data entry in operational workflows.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech-stack" class="techStackSection section">
+            <div class="contentWrap">
+                <p class="sectionKicker mono">[ TECH STACK // ACTIVE RUNTIME ]</p>
+                <p class="sectionSubtext">Technologies applied in real systems, not just listed.</p>
+                <p class="mono overlayTitle">SYSTEM LOADOUT: Applied AI Systems &amp; Data Intelligence</p>
+
+                <div class="runwayShell" id="runwayShell">
+                    <div class="logoRunway" id="logoRunway">
+                        <div class="logoLane">
+                            <button class="logoItem" data-tech="python"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python"><span class="mono">PYTHON</span></button>
+                            <button class="logoItem" data-tech="azureml"><img src="assets/logos/azureml.svg" alt="Azure ML"><span class="mono">AZURE ML</span></button>
+                            <button class="logoItem" data-tech="pytorch"><img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch"><span class="mono">PYTORCH</span></button>
+                            <button class="logoItem" data-tech="rag"><img src="assets/logos/rag.svg" alt="RAG"><span class="mono">RAG</span></button>
+                            <button class="logoItem" data-tech="llm"><img src="assets/logos/llm.svg" alt="LLM"><span class="mono">LLM</span></button>
+                            <button class="logoItem" data-tech="streamlit"><img src="https://cdn.simpleicons.org/streamlit/FF4B4B" alt="Streamlit"><span class="mono">STREAMLIT</span></button>
+                            <button class="logoItem" data-tech="sql"><img src="assets/logos/sql.svg" alt="SQL"><span class="mono">SQL</span></button>
+                        </div>
+                        <div class="logoLane" aria-hidden="true">
+                            <button class="logoItem" tabindex="-1"><img src="https://cdn.simpleicons.org/python/3776AB" alt=""><span class="mono">PYTHON</span></button>
+                            <button class="logoItem" tabindex="-1"><img src="assets/logos/azureml.svg" alt=""><span class="mono">AZURE ML</span></button>
+                            <button class="logoItem" tabindex="-1"><img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt=""><span class="mono">PYTORCH</span></button>
+                            <button class="logoItem" tabindex="-1"><img src="assets/logos/rag.svg" alt=""><span class="mono">RAG</span></button>
+                            <button class="logoItem" tabindex="-1"><img src="assets/logos/llm.svg" alt=""><span class="mono">LLM</span></button>
+                            <button class="logoItem" tabindex="-1"><img src="https://cdn.simpleicons.org/streamlit/FF4B4B" alt=""><span class="mono">STREAMLIT</span></button>
+                            <button class="logoItem" tabindex="-1"><img src="assets/logos/sql.svg" alt=""><span class="mono">SQL</span></button>
+                        </div>
                     </div>
-                    
                 </div>
 
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="images/image_1.jpg" class="d-block w-100" alt="Photo 1">
-                      </div>
-                      <!-- <div class="carousel-item">
-                        <img src="images/image_2.jpg" class="d-block w-100" alt="Photo 2">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="images/image_3.jpg" class="d-block w-100" alt="Photo 3">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="images/image_4.jpg" class="d-block w-100" alt="Photo 3">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="images/image_5.jpg" class="d-block w-100" alt="Photo 3">
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button> -->
-                  </div>
-                  
+                <article class="techContext mono" id="techContext">
+                    <h3 id="contextTitle">PYTHON</h3>
+                    <p>&gt; Systems:</p>
+                    <ul id="contextSystems">
+                        <li>EV Anomaly Detection (GRU Autoencoder)</li>
+                        <li>LLM Data Auditor</li>
+                        <li>Voice-to-Data Assistant</li>
+                    </ul>
+                    <p id="contextFocus">&gt; Focus: Data pipelines, ML systems, backend logic</p>
+                </article>
+            </div>
+        </section>
 
-            </header>
-
-            <section id="experience" class="section">
-                <div class="container">
-                    <h2>Experience</h2>
-                    <div class="experience-item">
-                        <h3>AI Team Intern</h3>
-                        <p>EY GDS, Bangalore | May 2024 - July 2024</p>
-                        <ul>
-                            <li>Analyzed geo-spatial data using Microsoft Planetary Computer for a company-hosted data science challenge.</li>
-                            <li>Created a business presentation for integrating small language models to enhance employee efficiency.</li>
-                        </ul>
-                    </div>
-                    <div class="experience-item">
-                        <h3>Classification of Driving Behaviour</h3>
-                        <p>Vellore Institute of Technology | 2024 - Present</p>
-                        <ul>
-                            <li>Conducting research using over 100,000 rows of data from an electric scooter to classify driving behavior.</li>
-                            <li>Analyzing trip readings using unsupervised machine learning algorithms to identify patterns.</li>
-                        </ul>
-                    </div>
+        <section id="education" class="educationSection section">
+            <div class="contentWrap">
+                <div class="educationHeader">
+                    <p class="sectionKicker mono">[ EDUCATION // KNOWLEDGE BASE ]</p>
+                    <p class="educationSubtext">Formal training grounding applied systems thinking</p>
                 </div>
-            </section>
 
-            <section id="projects" class="section">
-                <div class="container">
-                    <h2>Projects</h2>
-                    <div class="experience-item">
-                        <h3>Course Recommendation System</h3>
-                        <ul>
-                            <li>Developed a course recommendation system using neural networks with TensorFlow to suggest similar courses based on user input.</li>
-                            <li>Optimized the model for accuracy and relevance by leveraging structured data and advanced machine learning techniques.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="experience-item">
-                        <h3>CV Sensei - Resume Feedback Provider</h3>
-                        <ul>
-                            <li>Built an AI-powered resume reviewer that provides bullet-level and section-wise feedback using the Gemini API.</li>
-                            <li>Designed a Streamlit interface and engineered prompts to deliver targeted and actionable resume improvement suggestions.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="experience-item">
-                        <h3>AI Voice Assistant</h3>
-                        <ul>
-                            <li>Created a background voice assistant that activates via a hotword, processes commands using LLMs, and reads responses aloud.</li>
-                            <li>Integrated speech-to-text, real-time audio processing, and natural language understanding for seamless interaction.</li>
-                        </ul>
-                    </div>
+                <div class="educationList">
+                    <article class="educationEntry educationEntryPrimary">
+                        <h2 class="sectionTitle institutionPrimary">Vellore Institute of Technology</h2>
+                        <p class="educationSubheading">B.Tech - Computer Science</p>
+                        <p class="educationSubheading">Specialization: Data Science</p>
+                        <p class="mono educationMeta">[ 2022 - 2026 ] &nbsp;&nbsp; [ CGPA: 9.03 ]</p>
+                    </article>
+
+                    <article class="educationEntry educationEntrySecondary">
+                        <h3 class="institutionSecondary">Deens Academy</h3>
+                        <p class="educationSubheading">Higher Secondary</p>
+                        <p class="mono educationMeta">[ April 2020 - April 2022 ] &nbsp;&nbsp; [ 97.2% ]</p>
+                    </article>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="skills" class="section">
-                <div class="container">
-                    <h2>Skills</h2>
-                    
+        <footer class="siteFooter mono">
+            <div class="footerLinks">
+                <a href="mailto:jtarosh@gmail.com">EMAIL</a>
+                <a href="https://github.com/taroshima" target="_blank" rel="noopener">GITHUB</a>
+                <a href="https://www.linkedin.com/in/tarosh-jayaprakash-0bb5951ab/" target="_blank" rel="noopener">LINKEDIN</a>
+            </div>
+            <p>&copy; 2026 Tarosh Jayaprakash</p>
+        </footer>
+    </main>
 
-                <div id="skills-chart-container"></div>
-                    <!-- Legend for skill levels -->
-                    <div class="skills-legend">
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #10b981;"></div>
-                            <span>Expert (90-100%)</span>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #0ea5e9;"></div>
-                            <span>Advanced (80-89%)</span>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #6366f1;"></div>
-                            <span>Proficient (70-79%)</span>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #8b5cf6;"></div>
-                            <span>Intermediate (60-69%)</span>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #ec4899;"></div>
-                            <span>Beginner (<60%)</span>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-            </section>
-
-
-            <section id="education" class="section">
-                <div class="container">
-                    <h2>Education</h2>
-                    <div class="education-item">
-                        <h3>Vellore Institute of Technology</h3>
-                        <p>BTech Computer Science with a specialization in Data Science (2022-2026)</p>
-                        <p>CGPA: 9.00</p>
-                    </div>
-                    <div class="education-item">
-                        <h3>Deens Academy, Bangalore</h3>
-                        <p>Grade 11-12 (2020-2022)</p>
-                        <p>Grade: 97.2%</p>
-                    </div>
-                    <div class="education-item">
-                        <h3>Vibgyor High Marathahalli, Bangalore</h3>
-                        <p>Grade 1-10 (2010-2020)</p>
-                        <p>Grade: 97.2%</p>
-                    </div>
-                </div>
-            </section>            
-
-            <section id="about" class="section">
-                <div class="container">
-                    <h2>About Me</h2> 
-                    <div class="grid"> 
-                        <div class="about-text">
-                            <p class="about-paragraph">
-                                Heylo, I’m Tarosh! <br><br>  
-
-                                I’m a Computer Science student at VIT Vellore, specializing in Data Science. 
-                                I’m passionate about machine learning, exploring new technologies, and building cool projects. <br><br>  
-
-                                When I’m not coding, you’ll probably find me reading manhwa, discovering new music, 
-                                or geeking out over the latest tech trends. <br><br>  
-
-                                I'm always up for learning something new and collaborating on exciting ideas.
-
-                                Feel free to reach out to me if you want to chat or work on a project together! 
-
-                            </p>
-                            
-                        </div>
-                        <div class="about-playlist">
-                            <iframe src="https://open.spotify.com/embed/playlist/5IYO40dJI3lzTnQaL9JB5H?utm_source=generator&theme=0" 
-                                    width="450" 
-                                    height="500" 
-                                    frameborder="0" 
-                                    allowtransparency="true" 
-                                    allow="encrypted-media">
-                            </iframe>
-                        </div>
-                    </div> 
-                </div>
-            </section>
-            <footer class="footer">
-                <div class="footer-content">
-                    <a href="mailto:jtarosh@gmail.com" target="_blank" class="footer-link">
-                        <i class="fas fa-envelope"></i> Email
-                    </a>
-                    <a href="https://www.linkedin.com/in/tarosh-jayaprakash-0bb5951ab/" target="_blank" class="footer-link">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                    <a href="https://github.com/taroshima" target="_blank" class="footer-link">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
-            </footer>
-
-        </div>
-    </div>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
-    
 </body>
 </html>
