@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const dot = document.querySelector("#customCursorDot");
         const ring = document.querySelector("#customCursorRing");
+        const grid = document.querySelector(".grid-layer");
         if (!dot || !ring) return;
 
         document.body.classList.add("customCursorOn");
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let ringY = mouseY;
         let ringScale = 1;
         let cursorRaf = null;
+        let lastGridCell = "";
 
         const moveCursor = () => {
             const dotEase = reduceMotion ? 1 : 0.62;
@@ -111,6 +113,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const activate = () => document.body.classList.add("cursorActive");
         const deactivate = () => document.body.classList.remove("cursorActive");
 
+        const updateGridHover = () => {
+            if (!grid) return;
+
+            const styles = window.getComputedStyle(grid);
+            const gridSize = Number.parseFloat(styles.backgroundSize) || 56;
+            const gridShift = Number.parseFloat(window.getComputedStyle(document.body).getPropertyValue("--grid-shift")) || 0;
+            const gridX = Math.floor(mouseX / gridSize) * gridSize;
+            const gridY = Math.floor((mouseY - gridShift) / gridSize) * gridSize;
+            const gridCell = `${gridX}:${gridY}:${gridSize}`;
+
+            grid.style.setProperty("--grid-hover-size", `${gridSize}px`);
+
+            if (gridCell === lastGridCell || reduceMotion) return;
+            lastGridCell = gridCell;
+
+            const trail = document.createElement("span");
+            trail.className = "gridTrailCell";
+            trail.style.left = `${gridX}px`;
+            trail.style.top = `${gridY}px`;
+            trail.style.width = `${gridSize}px`;
+            trail.style.height = `${gridSize}px`;
+            grid.appendChild(trail);
+
+            trail.addEventListener("animationend", () => trail.remove(), { once: true });
+        };
+
         interactiveElements.forEach((element) => {
             element.addEventListener("mouseenter", activate);
             element.addEventListener("mouseleave", deactivate);
@@ -121,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("pointermove", (event) => {
             mouseX = event.clientX;
             mouseY = event.clientY;
+            updateGridHover();
             document.body.classList.add("cursorVisible");
         }, { passive: true });
 
