@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initCustomCursor();
     initHeroInteractions();
-    initExperienceHorizontalScroll();
+    initExperienceTimeline();
     initSectionModeSignals();
     initMetricInteractions();
     initInnovationHint();
@@ -70,15 +70,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let mouseX = window.innerWidth * 0.5;
         let mouseY = window.innerHeight * 0.5;
+        let dotX = mouseX;
+        let dotY = mouseY;
         let ringX = mouseX;
         let ringY = mouseY;
+        let ringScale = 1;
         let cursorRaf = null;
 
         const moveCursor = () => {
-            ringX += (mouseX - ringX) * 0.18;
-            ringY += (mouseY - ringY) * 0.18;
-            dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-            ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+            const dotEase = reduceMotion ? 1 : 0.62;
+            const ringEase = reduceMotion ? 1 : 0.28;
+            const targetScale = document.body.classList.contains("cursorDown")
+                ? 0.82
+                : document.body.classList.contains("cursorActive")
+                    ? 1.3
+                    : 1;
+
+            dotX += (mouseX - dotX) * dotEase;
+            dotY += (mouseY - dotY) * dotEase;
+            ringX += (mouseX - ringX) * ringEase;
+            ringY += (mouseY - ringY) * ringEase;
+            ringScale += (targetScale - ringScale) * 0.35;
+
+            if (Math.abs(mouseX - dotX) < 0.1) dotX = mouseX;
+            if (Math.abs(mouseY - dotY) < 0.1) dotY = mouseY;
+            if (Math.abs(mouseX - ringX) < 0.1) ringX = mouseX;
+            if (Math.abs(mouseY - ringY) < 0.1) ringY = mouseY;
+            if (Math.abs(targetScale - ringScale) < 0.01) ringScale = targetScale;
+
+            dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0)`;
+            ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) scale(${ringScale})`;
             cursorRaf = window.requestAnimationFrame(moveCursor);
         };
 
@@ -97,10 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
             element.addEventListener("blur", deactivate);
         });
 
-        document.addEventListener("mousemove", (event) => {
+        document.addEventListener("pointermove", (event) => {
             mouseX = event.clientX;
             mouseY = event.clientY;
-        });
+            document.body.classList.add("cursorVisible");
+        }, { passive: true });
 
         document.addEventListener("mouseenter", () => {
             document.body.classList.add("cursorVisible");
@@ -152,35 +174,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function initExperienceHorizontalScroll() {
+    function initExperienceTimeline() {
         const section = document.querySelector("#experience");
-        const track = document.querySelector(".experienceTrack");
-        const panels = gsap.utils.toArray(".experiencePanel");
-        const progress = document.querySelector("#experienceProgress");
-        if (!section || !track || panels.length < 2 || reduceMotion || window.innerWidth <= 768) return;
+        if (!section) return;
 
         gsap.registerPlugin(ScrollTrigger);
-        gsap.to(track, {
-            x: () => -(track.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: section,
-                pin: true,
-                scrub: 1,
-                anticipatePin: 1,
-                start: "top top",
-                end: () => `+=${track.scrollWidth - window.innerWidth}`,
-                invalidateOnRefresh: true,
-                onEnter: () => document.body.classList.add("inWorkHistory"),
-                onLeave: () => document.body.classList.remove("inWorkHistory"),
-                onEnterBack: () => document.body.classList.add("inWorkHistory"),
-                onLeaveBack: () => document.body.classList.remove("inWorkHistory"),
-                onUpdate: (self) => {
-                    const idx = self.progress < 0.5 ? 1 : 2;
-                    const bar = idx === 1 ? "██████░░░░░░" : "████████████";
-                    if (progress) progress.textContent = `[ ${bar} ] 0${idx} / 02`;
-                }
-            }
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top 70%",
+            end: "bottom 30%",
+            onEnter: () => document.body.classList.add("inWorkHistory"),
+            onLeave: () => document.body.classList.remove("inWorkHistory"),
+            onEnterBack: () => document.body.classList.add("inWorkHistory"),
+            onLeaveBack: () => document.body.classList.remove("inWorkHistory")
         });
     }
 
