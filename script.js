@@ -3,49 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const techMeta = {
-        python: {
-            title: "PYTHON",
-            where: "Used in EV anomaly detection, LLM data auditor, and voice-to-data assistant backends.",
-            focus: "Role: Core language for ML pipelines and backend logic."
-        },
-        azureml: {
-            title: "AZURE ML",
-            where: "Used in the Canary AI predictive analytics deployment workflow.",
-            focus: "Role: Experiment tracking, model packaging, and cloud deployment."
-        },
-        pandas: {
-            title: "PANDAS",
-            where: "Used for tabular preprocessing, exploratory analysis, and dataset shaping.",
-            focus: "Role: Data cleaning, wrangling, and analysis workflows."
-        },
-        pytorch: {
-            title: "PYTORCH",
-            where: "Used for GRU autoencoder training on electric two-wheeler telemetry.",
-            focus: "Role: Deep learning model development and validation."
-        },
-        rag: {
-            title: "RAG",
-            where: "Used inside the automated data auditor to ground checks on source context.",
-            focus: "Role: Retrieval layer for reliable LLM outputs."
-        },
-        llm: {
-            title: "LLM ORCHESTRATION",
-            where: "Used in both the LLM auditor and voice command structuring assistant.",
-            focus: "Role: Prompt workflows and inference routing."
-        },
-        streamlit: {
-            title: "STREAMLIT",
-            where: "Used for internal analytics demos and quick operator-facing interfaces.",
-            focus: "Role: Fast UI layer for AI and data tools."
-        },
-        sql: {
-            title: "SQL",
-            where: "Used in telemetry analysis and structured validation routines.",
-            focus: "Role: Querying, filtering, and shaping relational data."
-        }
-    };
-
     initCustomCursor();
     initHeroInteractions();
     initExperienceTimeline();
@@ -54,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initInnovationHint();
     initProjectInteractions();
     initScrollVelocityAwareness();
-    initTechStackCubes();
     initEducationBoot();
     initFooterInteractions();
 
@@ -67,7 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const grid = document.querySelector(".grid-layer");
         if (!dot || !ring) return;
 
+        document.documentElement.classList.add("customCursorOn");
         document.body.classList.add("customCursorOn");
+        document.documentElement.style.cursor = "none";
+        document.body.style.cursor = "none";
 
         let mouseX = window.innerWidth * 0.5;
         let mouseY = window.innerHeight * 0.5;
@@ -78,10 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
         let ringScale = 1;
         let cursorRaf = null;
         let lastGridCell = "";
+        let lastGridPoint = null;
 
         const moveCursor = () => {
-            const dotEase = reduceMotion ? 1 : 0.62;
-            const ringEase = reduceMotion ? 1 : 0.28;
+            const dotEase = reduceMotion ? 1 : 0.72;
+            const ringEase = reduceMotion ? 1 : 0.36;
             const targetScale = document.body.classList.contains("cursorDown")
                 ? 0.82
                 : document.body.classList.contains("cursorActive")
@@ -107,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cursorRaf = window.requestAnimationFrame(moveCursor);
 
-        const interactiveSelector = "a, button, .techCube, .projectCard, [role='button']";
+        const interactiveSelector = "a, button, .projectCard, [role='button']";
         const interactiveElements = document.querySelectorAll(interactiveSelector);
 
         const activate = () => document.body.classList.add("cursorActive");
@@ -126,17 +86,40 @@ document.addEventListener("DOMContentLoaded", () => {
             grid.style.setProperty("--grid-hover-size", `${gridSize}px`);
 
             if (gridCell === lastGridCell || reduceMotion) return;
-            lastGridCell = gridCell;
 
-            const trail = document.createElement("span");
-            trail.className = "gridTrailCell";
-            trail.style.left = `${gridX}px`;
-            trail.style.top = `${gridY}px`;
-            trail.style.width = `${gridSize}px`;
-            trail.style.height = `${gridSize}px`;
-            grid.appendChild(trail);
+            const addTrailCell = (x, y) => {
+                const cell = `${x}:${y}:${gridSize}`;
+                if (cell === lastGridCell) return;
+                lastGridCell = cell;
 
-            trail.addEventListener("animationend", () => trail.remove(), { once: true });
+                const trail = document.createElement("span");
+                trail.className = "gridTrailCell";
+                trail.style.left = `${x}px`;
+                trail.style.top = `${y + gridShift}px`;
+                trail.style.width = `${gridSize}px`;
+                trail.style.height = `${gridSize}px`;
+                grid.appendChild(trail);
+
+                trail.addEventListener("animationend", () => trail.remove(), { once: true });
+            };
+
+            if (!lastGridPoint) {
+                addTrailCell(gridX, gridY);
+                lastGridPoint = { x: gridX, y: gridY };
+                return;
+            }
+
+            const dx = gridX - lastGridPoint.x;
+            const dy = gridY - lastGridPoint.y;
+            const steps = Math.max(Math.abs(dx), Math.abs(dy)) / gridSize;
+
+            for (let step = 1; step <= steps; step += 1) {
+                const x = Math.round((lastGridPoint.x + (dx * step) / steps) / gridSize) * gridSize;
+                const y = Math.round((lastGridPoint.y + (dy * step) / steps) / gridSize) * gridSize;
+                addTrailCell(x, y);
+            }
+
+            lastGridPoint = { x: gridX, y: gridY };
         };
 
         interactiveElements.forEach((element) => {
@@ -287,165 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
             type();
         }
         if (expand && card) expand.addEventListener("click", () => card.classList.toggle("expanded"));
-    }
-
-    function initTechStackCubes() {
-        const cubes = document.querySelectorAll(".techCube[data-tech]");
-        const dialogue = document.querySelector("#techDialogue");
-        const title = document.querySelector("#techDialogueTitle");
-        const where = document.querySelector("#techDialogueWhere");
-        const focus = document.querySelector("#techDialogueFocus");
-        if (cubes.length === 0 || !dialogue || !title || !where || !focus) return;
-
-        const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-
-        const cubeStates = [...cubes].map((cube) => {
-            const body = cube.querySelector(".techCubeBody");
-            if (!body) return null;
-            const logo = cube.dataset.logo || "";
-            const label = cube.dataset.label || "";
-
-            cube.setAttribute("aria-label", `${label} technology cube`);
-
-            cube.querySelectorAll(".cubeFace").forEach((face) => {
-                face.innerHTML = `<span class="cubeContent"><img src="${logo}" alt=""><span class="mono">${label}</span></span>`;
-            });
-
-            const delay = Number.parseFloat(getComputedStyle(cube).getPropertyValue("--cube-delay")) || 0;
-            return {
-                cube,
-                body,
-                baseX: -16,
-                baseY: 18 + delay * 12,
-                baseZ: 0,
-                baseMoveX: 0,
-                baseMoveY: 0,
-                spinSpeed: 0.05 + Math.random() * 0.03,
-                dragRotateX: 0,
-                dragRotateY: 0,
-                dragMoveX: 0,
-                dragMoveY: 0,
-                dragging: false,
-                hovered: false,
-                pointerStartX: 0,
-                pointerStartY: 0
-            };
-        }).filter(Boolean);
-
-        const setDialoguePosition = (x, y) => {
-            const pad = 14;
-            const maxLeft = window.innerWidth - dialogue.offsetWidth - 8;
-            const maxTop = window.innerHeight - dialogue.offsetHeight - 8;
-            dialogue.style.left = `${clamp(x + pad, 8, maxLeft)}px`;
-            dialogue.style.top = `${clamp(y + pad, 8, maxTop)}px`;
-        };
-
-        const showDialogue = (cube, clientX, clientY) => {
-            const data = techMeta[cube.dataset.tech];
-            if (!data) return;
-            title.textContent = data.title;
-            where.textContent = data.where;
-            focus.textContent = data.focus;
-            dialogue.style.display = "block";
-            dialogue.setAttribute("aria-hidden", "false");
-            setDialoguePosition(clientX, clientY);
-        };
-
-        const hideDialogue = () => {
-            dialogue.style.display = "none";
-            dialogue.setAttribute("aria-hidden", "true");
-        };
-
-        cubeStates.forEach((state) => {
-            const { cube } = state;
-            cube.addEventListener("mouseenter", (event) => {
-                state.hovered = true;
-                showDialogue(cube, event.clientX, event.clientY);
-            });
-
-            cube.addEventListener("mousemove", (event) => {
-                setDialoguePosition(event.clientX, event.clientY);
-            });
-
-            cube.addEventListener("mouseleave", () => {
-                state.hovered = false;
-                hideDialogue();
-            });
-
-            cube.addEventListener("focus", () => {
-                const rect = cube.getBoundingClientRect();
-                showDialogue(cube, rect.right - 10, rect.top + 12);
-            });
-
-            cube.addEventListener("blur", hideDialogue);
-
-            cube.addEventListener("pointerdown", (event) => {
-                state.dragging = true;
-                state.pointerStartX = event.clientX;
-                state.pointerStartY = event.clientY;
-                cube.classList.add("isDragging");
-                cube.setPointerCapture(event.pointerId);
-            });
-
-            cube.addEventListener("pointermove", (event) => {
-                if (!state.dragging) return;
-                const dx = event.clientX - state.pointerStartX;
-                const dy = event.clientY - state.pointerStartY;
-
-                state.dragMoveX = clamp(dx * 0.16, -18, 18);
-                state.dragMoveY = clamp(dy * 0.16, -18, 18);
-                state.dragRotateY = clamp(dx * 0.28, -42, 42);
-                state.dragRotateX = clamp(-dy * 0.24, -36, 36);
-
-                setDialoguePosition(event.clientX, event.clientY);
-            });
-
-            const endDrag = (event) => {
-                if (!state.dragging) return;
-                state.dragging = false;
-                cube.classList.remove("isDragging");
-                if (event.pointerId !== undefined && cube.hasPointerCapture(event.pointerId)) {
-                    cube.releasePointerCapture(event.pointerId);
-                }
-
-                // Keep the user-edited orientation and drag offset as the new resting state.
-                state.baseX += state.dragRotateX;
-                state.baseY += state.dragRotateY;
-                state.baseMoveX = clamp(state.baseMoveX + state.dragMoveX, -22, 22);
-                state.baseMoveY = clamp(state.baseMoveY + state.dragMoveY, -22, 22);
-                state.dragRotateX = 0;
-                state.dragRotateY = 0;
-                state.dragMoveX = 0;
-                state.dragMoveY = 0;
-                if (!state.hovered) hideDialogue();
-            };
-
-            cube.addEventListener("pointerup", endDrag);
-            cube.addEventListener("pointercancel", endDrag);
-        });
-
-        let rafId = null;
-        let lastTime = performance.now();
-
-        const animateCubes = (now) => {
-            const dt = Math.max(now - lastTime, 16);
-            lastTime = now;
-
-            cubeStates.forEach((state) => {
-                if (!state.hovered && !state.dragging && !reduceMotion) {
-                    state.baseY += state.spinSpeed * (dt / 16);
-                }
-
-                state.body.style.transform = `translate3d(${state.baseMoveX + state.dragMoveX}px, ${state.baseMoveY + state.dragMoveY}px, 0px) rotateX(${state.baseX + state.dragRotateX}deg) rotateY(${state.baseY + state.dragRotateY}deg) rotateZ(${state.baseZ}deg)`;
-            });
-
-            rafId = window.requestAnimationFrame(animateCubes);
-        };
-
-        rafId = window.requestAnimationFrame(animateCubes);
-        window.addEventListener("beforeunload", () => {
-            if (rafId) window.cancelAnimationFrame(rafId);
-        });
     }
 
     function initEducationBoot() {
