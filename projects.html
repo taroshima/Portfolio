@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Projects — Tarosh Jayaprakash</title>
+  <meta name="description" content="RAG evaluation and electric vehicle anomaly detection projects by Tarosh Jayaprakash.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects — Tarosh Jayaprakash">
+  <meta property="og:description" content="RAG evaluation and electric vehicle anomaly detection projects by Tarosh Jayaprakash.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="assets/favicons/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/favicons/apple-touch-icon.png">
+  <link rel="manifest" href="assets/favicons/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=11">
+  <script src="script.js?v=5" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page">
+    <header class="header">
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="education.html">Education</a>
+      </nav>
+    </header>
+    <main id="main" class="content-main" tabindex="-1">
+      <section class="section" id="work" aria-labelledby="page-title">
+        <h1 id="page-title">Projects</h1>
+        <div class="section-body">
+          <article class="project">
+            <h2>RAG evaluation platform</h2>
+            <p>Developed an evaluation platform that logs generated answers, retrieved context, and failure cases from a RAG pipeline. A correction loop increases retrieval depth and regenerates answers that fall below a quality score of 70.</p>
+            <p class="tools">FastAPI, Streamlit, ChromaDB</p>
+            <details>
+              <summary>How it works <span aria-hidden="true">+</span></summary>
+              <div class="detail-content">
+                <p>The platform tracks faithfulness, answer relevancy, and context precision across runs. Each answer is limited to one correction attempt, with both outputs retained for comparison.</p>
+                <ol class="steps">
+                  <li>Retrieve context and generate an answer.</li>
+                  <li>Evaluate answer quality and log the result.</li>
+                  <li>Increase retrieval depth and regenerate answers scoring below 70.</li>
+                </ol>
+              </div>
+            </details>
+          </article>
+          <article class="project">
+            <h2>EV anomaly detection</h2>
+            <p>Co-developed an anomaly detection framework for electric two-wheelers using a GRU-based autoencoder. The model uses over 100,000 telemetry records to identify abnormal driving patterns and system-level anomalies through unsupervised sequence modelling.</p>
+            <p class="tools">GRU autoencoder, unsupervised learning, time-series data</p>
+            <details>
+              <summary>Patent application <span aria-hidden="true">+</span></summary>
+              <div class="detail-content">
+                <p>A Device and Method for Detecting Anomalies in Electric Two-Wheelers.</p>
+                <p>Published application no. 202541080133.</p>
+                <p>With Dr. Ashok B, Dr. Gunavathi C, and Rudraksh Srivastava.</p>
+              </div>
+            </details>
+          </article>
+          <details class="more-projects">
+            <summary>Additional projects <span aria-hidden="true">+</span></summary>
+            <div class="detail-content">
+              <article><h2>LLM-based data auditor</h2><p>Developed an auditing pipeline that combines retrieval-augmented generation with structured validation to identify inconsistencies in datasets and documents.</p></article>
+              <article><h2>Voice-to-data assistant</h2><p>Built a real-time voice interface that converts unstructured spoken commands into structured records for downstream data processing.</p></article>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
